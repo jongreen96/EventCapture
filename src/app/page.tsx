@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
+import { Separator } from '@/components/ui/separator';
 
 export default function Home() {
   return (
@@ -32,7 +33,11 @@ export default function Home() {
                 Capture your moment
               </Button>
 
-              <p className='text-center'>or</p>
+              <div className='flex items-center justify-center space-x-2'>
+                <Separator className='mt-1 w-5/12' />
+                <p className='text-center text-muted-foreground'>or</p>
+                <Separator className='mt-1 w-5/12' />
+              </div>
 
               <Button className='w-full'>Sign in with Google</Button>
             </form>
