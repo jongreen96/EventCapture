@@ -1,4 +1,3 @@
-import { Button } from './ui/button';
 import {
   Card,
   CardContent,
@@ -6,6 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from './ui/card';
+import FormFocusButton from './ui/formfocusbutton';
 
 export default function Plans() {
   return (
@@ -31,7 +31,7 @@ export default function Plans() {
               </div>
             </div>
             <p className='font-semibold text-primary'>One Time Purchase</p>
-            <Button className='w-full'>Get Started</Button>
+            <FormFocusButton />
           </CardContent>
 
           <CardFooter>
@@ -60,7 +60,7 @@ export default function Plans() {
               </div>
             </div>
             <p className='font-semibold text-primary'>One Time Purchase</p>
-            <Button className='w-full'>Get Started</Button>
+            <FormFocusButton />
           </CardContent>
 
           <CardFooter>
@@ -91,7 +91,7 @@ export default function Plans() {
               </div>
             </div>
             <p className='font-semibold text-primary'>One Time Purchase</p>
-            <Button className='w-full'>Get Started</Button>
+            <FormFocusButton />
           </CardContent>
 
           <CardFooter>
@@ -125,7 +125,7 @@ export default function Plans() {
               </div>
             </div>
             <p className='font-semibold text-primary'>One Time Purchase</p>
-            <Button className='w-full'>Get Started</Button>
+            <FormFocusButton />
           </CardContent>
 
           <CardFooter>

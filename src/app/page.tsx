@@ -7,7 +7,10 @@ import { Separator } from '@/components/ui/separator';
 export default function Home() {
   return (
     <main className='space-y-8'>
-      <section className='flex items-center bg-hero bg-cover bg-center lg:h-[50vh]'>
+      <section
+        id='hero'
+        className='flex items-center bg-hero bg-cover bg-center lg:h-[50vh]'
+      >
         <div className='container flex flex-col items-center justify-around space-y-6 p-4 lg:min-h-96 lg:flex-row'>
           <div className='max-w-prose space-y-6 text-lg font-semibold'>
             <h1 className='text-4xl font-semibold'>
@@ -33,7 +36,7 @@ export default function Home() {
           <Card className='w-full max-w-prose lg:w-72'>
             <CardContent className='p-4'>
               <form action='' className='flex flex-col space-y-2'>
-                <Input type='text' placeholder='Type your email' />
+                <Input type='text' id='email' placeholder='Type your email' />
 
                 <Button type='submit' className='w-full'>
                   Capture your moment
@@ -52,8 +55,8 @@ export default function Home() {
         </div>
       </section>
 
-      <section className='container flex flex-col items-center justify-between gap-4 p-4 md:flex-row'>
-        <Card className='transition-all md:w-96 md:hover:scale-110'>
+      <section className='container flex flex-col items-center justify-evenly gap-4 p-4 md:flex-row'>
+        <Card className='transition-all md:w-96 md:hover:scale-105'>
           <CardContent className='p-4'>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
@@ -65,7 +68,7 @@ export default function Home() {
           </CardFooter>
         </Card>
 
-        <Card className='transition-all md:w-96 md:hover:scale-110'>
+        <Card className='transition-all md:w-96 md:hover:scale-105'>
           <CardContent className='p-4'>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
@@ -77,7 +80,7 @@ export default function Home() {
           </CardFooter>
         </Card>
 
-        <Card className='transition-all md:w-96 md:hover:scale-110'>
+        <Card className='transition-all md:w-96 md:hover:scale-105'>
           <CardContent className='p-4'>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
