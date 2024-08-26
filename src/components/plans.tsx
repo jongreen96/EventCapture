@@ -23,7 +23,9 @@ export default function Plans() {
 
           <CardContent className='space-y-2'>
             <div className='flex items-center justify-center gap-2 text-left'>
-              <p className='text-5xl font-bold text-primary'>$5</p>
+              <p className='text-5xl font-bold text-primary'>
+                <span className='font-normal'>$</span>5
+              </p>
               <div className='whitespace-nowrap text-xs'>
                 <p>3 months storage</p>
                 <p>Instant downloads</p>
@@ -52,7 +54,9 @@ export default function Plans() {
 
           <CardContent className='space-y-2'>
             <div className='flex items-center justify-center gap-2 text-left'>
-              <p className='text-5xl font-bold text-primary'>$40</p>
+              <p className='text-5xl font-bold text-primary'>
+                <span className='font-normal'>$</span>40
+              </p>
               <div className='whitespace-nowrap text-xs'>
                 <p>3 months storage</p>
                 <p>Instant downloads</p>
@@ -83,7 +87,9 @@ export default function Plans() {
 
           <CardContent className='space-y-2'>
             <div className='flex items-center justify-center gap-2 text-left'>
-              <p className='text-5xl font-bold text-primary'>$100</p>
+              <p className='text-5xl font-bold text-primary'>
+                <span className='font-normal'>$</span>100
+              </p>
               <div className='whitespace-nowrap text-xs'>
                 <p>3 months storage</p>
                 <p>Instant downloads</p>
@@ -117,7 +123,9 @@ export default function Plans() {
 
           <CardContent className='space-y-2'>
             <div className='flex items-center justify-center gap-2 text-left'>
-              <p className='text-5xl font-bold text-primary'>$500</p>
+              <p className='text-5xl font-bold text-primary'>
+                <span className='font-normal'>$</span>500
+              </p>
               <div className='whitespace-nowrap text-xs'>
                 <p>3 months storage</p>
                 <p>Instant downloads</p>
