@@ -51,7 +51,7 @@ export default function Home() {
                 <Button className='w-full'>Sign in with Google</Button>
               </form>
             </CardContent>
-            <CardFooter className='-mt-3 pb-1 text-[0.7rem] text-muted-foreground'>
+            <CardFooter className='-mt-3 pb-2 text-[0.7rem] text-muted-foreground'>
               if you already have an account, we&apos;ll log you in
             </CardFooter>
           </Card>
