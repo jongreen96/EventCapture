@@ -22,9 +22,9 @@ export default function Plans() {
           </CardHeader>
 
           <CardContent className='space-y-2'>
-            <div className='flex justify-center gap-2 text-left'>
+            <div className='flex items-center justify-center gap-2 text-left'>
               <p className='text-5xl font-bold text-primary'>$5</p>
-              <div className='text-xs'>
+              <div className='whitespace-nowrap text-xs'>
                 <p>3 months storage</p>
                 <p>Instant downloads</p>
                 <p>Unlimited guests</p>
@@ -51,9 +51,9 @@ export default function Plans() {
           </CardHeader>
 
           <CardContent className='space-y-2'>
-            <div className='flex justify-center gap-2 text-left'>
+            <div className='flex items-center justify-center gap-2 text-left'>
               <p className='text-5xl font-bold text-primary'>$40</p>
-              <div className='text-xs'>
+              <div className='whitespace-nowrap text-xs'>
                 <p>3 months storage</p>
                 <p>Instant downloads</p>
                 <p>Unlimited guests</p>
@@ -82,9 +82,9 @@ export default function Plans() {
           </CardHeader>
 
           <CardContent className='space-y-2'>
-            <div className='flex justify-center gap-2 text-left'>
+            <div className='flex items-center justify-center gap-2 text-left'>
               <p className='text-5xl font-bold text-primary'>$100</p>
-              <div className='text-xs'>
+              <div className='whitespace-nowrap text-xs'>
                 <p>3 months storage</p>
                 <p>Instant downloads</p>
                 <p>Unlimited guests</p>
@@ -116,9 +116,9 @@ export default function Plans() {
           </CardHeader>
 
           <CardContent className='space-y-2'>
-            <div className='flex justify-center gap-2 text-left'>
+            <div className='flex items-center justify-center gap-2 text-left'>
               <p className='text-5xl font-bold text-primary'>$500</p>
-              <div className='text-xs'>
+              <div className='whitespace-nowrap text-xs'>
                 <p>3 months storage</p>
                 <p>Instant downloads</p>
                 <p>Unlimited guests</p>
