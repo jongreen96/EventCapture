@@ -1,8 +1,7 @@
 import Plans from '@/components/plans';
-import { Button } from '@/components/ui/button';
+import SignUpForm from '@/components/sign-up-form';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Separator } from '@/components/ui/separator';
+import { Suspense } from 'react';
 
 export default function Home() {
   return (
@@ -41,28 +40,10 @@ export default function Home() {
               </ul>
             </div>
 
-            <Card className='w-full max-w-prose lg:w-72'>
-              <CardContent className='p-4'>
-                <form action='' className='flex flex-col space-y-2'>
-                  <Input type='text' id='email' placeholder='Type your email' />
-
-                  <Button type='submit' className='w-full'>
-                    Capture your moment
-                  </Button>
-
-                  <div className='flex items-center justify-center space-x-2'>
-                    <Separator className='mt-1 w-5/12' />
-                    <p className='text-center text-muted-foreground'>or</p>
-                    <Separator className='mt-1 w-5/12' />
-                  </div>
-
-                  <Button className='w-full'>Sign in with Google</Button>
-                </form>
-              </CardContent>
-              <CardFooter className='-mt-3 pb-2 text-[0.7rem] text-muted-foreground'>
-                if you already have an account, we&apos;ll log you in
-              </CardFooter>
-            </Card>
+            <Suspense fallback={null}>
+              {/* TODO: Add fallback state */}
+              <SignUpForm />
+            </Suspense>
           </div>
         </section>
 
@@ -162,7 +143,7 @@ export default function Home() {
           <Card className='mt-4 aspect-video w-full bg-muted lg:w-3/4'></Card>
         </section>
 
-        <Plans />
+        <Plans reference />
 
         <section className='container flex flex-col items-center p-4 text-center'>
           <h2 className='max-w-prose text-3xl font-semibold'>

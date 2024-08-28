@@ -1,3 +1,4 @@
+import { Button } from './ui/button';
 import {
   Card,
   CardContent,
@@ -7,7 +8,7 @@ import {
 } from './ui/card';
 import FormFocusButton from './ui/formfocusbutton';
 
-export default function Plans() {
+export default function Plans({ reference }: { reference: boolean }) {
   return (
     <section className='container flex flex-col items-center p-4 text-center'>
       <h2 className='max-w-prose text-3xl font-semibold'>Plans & Prices</h2>
@@ -33,7 +34,16 @@ export default function Plans() {
               </div>
             </div>
             <p className='font-semibold text-primary'>One Time Purchase</p>
-            <FormFocusButton />
+
+            {reference ? (
+              <FormFocusButton />
+            ) : (
+              <Button asChild className='w-full'>
+                <a href='' target='_blank' rel='noreferrer'>
+                  Buy Now
+                </a>
+              </Button>
+            )}
           </CardContent>
 
           <CardFooter>
@@ -64,7 +74,16 @@ export default function Plans() {
               </div>
             </div>
             <p className='font-semibold text-primary'>One Time Purchase</p>
-            <FormFocusButton />
+
+            {reference ? (
+              <FormFocusButton />
+            ) : (
+              <Button asChild className='w-full'>
+                <a href='' target='_blank' rel='noreferrer'>
+                  Buy Now
+                </a>
+              </Button>
+            )}
           </CardContent>
 
           <CardFooter>
@@ -97,7 +116,16 @@ export default function Plans() {
               </div>
             </div>
             <p className='font-semibold text-primary'>One Time Purchase</p>
-            <FormFocusButton />
+
+            {reference ? (
+              <FormFocusButton />
+            ) : (
+              <Button asChild className='w-full'>
+                <a href='' target='_blank' rel='noreferrer'>
+                  Buy Now
+                </a>
+              </Button>
+            )}
           </CardContent>
 
           <CardFooter>
@@ -133,7 +161,16 @@ export default function Plans() {
               </div>
             </div>
             <p className='font-semibold text-primary'>One Time Purchase</p>
-            <FormFocusButton />
+
+            {reference ? (
+              <FormFocusButton />
+            ) : (
+              <Button asChild className='w-full'>
+                <a href='' target='_blank' rel='noreferrer'>
+                  Buy Now
+                </a>
+              </Button>
+            )}
           </CardContent>
 
           <CardFooter>
