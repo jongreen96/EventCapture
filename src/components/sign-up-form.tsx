@@ -12,6 +12,7 @@ export default function SignUpForm() {
   const searchParams = useSearchParams();
 
   const error = searchParams.get('error') as string;
+  const success = searchParams.get('success') as string;
 
   return (
     <Card className='w-full max-w-prose lg:w-72'>
@@ -25,10 +26,19 @@ export default function SignUpForm() {
             autoComplete='email'
             autoFocus
             required
-            className={cn('w-full', error && 'border-red-500')}
+            className={cn(
+              'w-full',
+              error && 'border-red-500',
+              success && 'border-green-500',
+            )}
           />
 
           {error && <p className='text-center text-sm text-red-500'>{error}</p>}
+          {success && (
+            <p className='text-center text-sm text-green-500'>
+              Check your email for a confirmation link
+            </p>
+          )}
 
           <Button type='submit' className='w-full'>
             Capture your moment
