@@ -1,20 +1,17 @@
 'use server';
 
-import { signIn } from '@/auth';
+import { signIn, signOut } from '@/auth';
+import { redirect } from 'next/navigation';
 
-// export async function signUpForm(formData: FormData) {
-//   'use server';
-
-//   const email = formData.get('email') as string;
-
-//   if (z.string().email().safeParse(email).success === false)
-//     redirect('/?error=invalid_email');
-
-//   return redirect('/?success=true');
-// }
-
-export async function signUpForm(formData: FormData) {
-  'use server';
-
+export async function signUpFormAction(formData: FormData) {
   await signIn('resend', formData);
+}
+
+export async function googleSignInAction() {
+  await signIn('google');
+}
+
+export async function authSignOutAction() {
+  await signOut();
+  redirect('/');
 }

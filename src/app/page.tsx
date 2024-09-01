@@ -1,9 +1,14 @@
+import { auth } from '@/auth';
 import Plans from '@/components/plans';
 import SignUpForm from '@/components/sign-up-form';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
+import { redirect } from 'next/navigation';
 import { Suspense } from 'react';
 
-export default function Home() {
+export default async function Home() {
+  const session = await auth();
+  if (session?.user) redirect('/admin');
+
   return (
     <>
       <main className='space-y-8'>

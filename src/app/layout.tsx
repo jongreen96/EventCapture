@@ -1,4 +1,4 @@
-import Nav from '@/components/ui/nav';
+import Nav from '@/components/nav';
 import { cn } from '@/lib/utils';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';

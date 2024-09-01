@@ -1,6 +1,6 @@
 'use client';
 
-import { signUpForm } from '@/app/actions';
+import { googleSignInAction, signUpFormAction } from '@/app/actions';
 import { cn } from '@/lib/utils';
 import { useSearchParams } from 'next/navigation';
 import { Button } from './ui/button';
@@ -17,7 +17,7 @@ export default function SignUpForm() {
   return (
     <Card className='w-full max-w-prose lg:w-72'>
       <CardContent className='p-4'>
-        <form action={signUpForm} className='flex flex-col space-y-2'>
+        <form action={signUpFormAction} className='flex flex-col space-y-2'>
           <Input
             type='text'
             name='email'
@@ -49,8 +49,12 @@ export default function SignUpForm() {
             <p className='text-center text-muted-foreground'>or</p>
             <Separator className='mt-1 w-5/12' />
           </div>
+        </form>
 
-          <Button className='w-full'>Sign in with Google</Button>
+        <form action={googleSignInAction} className='mt-3'>
+          <Button type='submit' className='w-full'>
+            Sign in with Google
+          </Button>
         </form>
       </CardContent>
       <CardFooter className='-mt-3 pb-2 text-[0.7rem] text-muted-foreground'>
