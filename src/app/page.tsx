@@ -46,7 +46,6 @@ export default async function Home() {
             </div>
 
             <Suspense fallback={null}>
-              {/* TODO: Add fallback state */}
               <SignUpForm />
             </Suspense>
           </div>

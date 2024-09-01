@@ -6,7 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from './ui/card';
-import FormFocusButton from './ui/formfocusbutton';
+import FormFocusButton from './ui/form-focus-button';
 
 export default function Plans({ reference }: { reference: boolean }) {
   return (
