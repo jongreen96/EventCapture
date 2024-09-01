@@ -1,6 +1,5 @@
-import { authSignOutAction } from '@/app/actions';
 import { auth } from '@/auth';
-import { Button } from './ui/button';
+import UserButton from './ui/user-button';
 
 export default async function Nav() {
   const session = await auth();
@@ -12,13 +11,7 @@ export default async function Nav() {
         <a href='/'>
           <p className='text-3xl font-semibold'>Event Capture</p>
         </a>
-        {user && (
-          <form action={authSignOutAction}>
-            <Button type='submit' size='sm' variant='secondary'>
-              Sign out
-            </Button>
-          </form>
-        )}
+        {user && <UserButton user={user} />}
       </div>
     </nav>
   );
