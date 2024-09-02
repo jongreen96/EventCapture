@@ -1,6 +1,7 @@
 import { signOutAction } from '@/app/actions';
 import userImagePlaceholder from '@/assets/userImagePlaceholder.jpg';
 import { LogOut, Settings } from 'lucide-react';
+import { User } from 'next-auth';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from './button';
@@ -13,7 +14,11 @@ import {
   DropdownMenuTrigger,
 } from './dropdown-menu';
 
-export default function UserButton({ user }: any) {
+interface UserProp {
+  user: User;
+}
+
+export default function UserButton({ user }: UserProp) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
