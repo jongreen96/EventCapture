@@ -1,9 +1,9 @@
-import { auth } from '@/auth';
 import Plans from '@/components/plans';
+import getSession from '@/lib/getSession';
 import { redirect } from 'next/navigation';
 
 export default async function PlansPage() {
-  const session = await auth();
+  const session = await getSession();
   if (!session?.user) redirect('/');
 
   return (

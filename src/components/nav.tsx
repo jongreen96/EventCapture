@@ -1,8 +1,8 @@
-import { auth } from '@/auth';
+import getSession from '@/lib/getSession';
 import UserButton from './ui/user-button';
 
 export default async function Nav() {
-  const session = await auth();
+  const session = await getSession();
   const user = session?.user;
 
   return (

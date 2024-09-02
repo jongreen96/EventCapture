@@ -1,12 +1,12 @@
-import { auth } from '@/auth';
 import Plans from '@/components/plans';
 import SignUpForm from '@/components/sign-up-form';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
+import getSession from '@/lib/getSession';
 import { redirect } from 'next/navigation';
 import { Suspense } from 'react';
 
 export default async function Home() {
-  const session = await auth();
+  const session = await getSession();
   if (session?.user) redirect('/admin');
 
   return (
