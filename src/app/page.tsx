@@ -17,7 +17,7 @@ export default async function Home() {
           className='flex items-center bg-hero bg-cover bg-center lg:h-[50vh]'
         >
           <div className='container flex flex-col items-center justify-around space-y-6 p-4 lg:min-h-96 lg:flex-row'>
-            <div className='max-w-prose space-y-6 text-lg font-semibold'>
+            <div className='max-w-prose space-y-6 text-lg font-semibold text-white'>
               <h1 className='text-4xl font-semibold'>
                 <span className='text-5xl font-bold'>Event Capture</span>
                 <br />
@@ -123,12 +123,10 @@ export default async function Home() {
             preserved.
           </p>
 
-          <div className='mt-4 flex aspect-video w-full gap-2 lg:w-3/4'>
-            <Card className='w-2/3 bg-muted'></Card>
-            <div className='flex w-full flex-col gap-2'>
-              <Card className='aspect-video bg-muted'></Card>
-              <Card className='aspect-video bg-muted'></Card>
-            </div>
+          <div className='mt-4 grid aspect-video w-full grid-cols-3 grid-rows-2 gap-2 lg:w-3/4'>
+            <Card className='col-end-2 row-start-1 row-end-3 h-full w-full bg-muted'></Card>
+            <Card className='col-start-2 col-end-4 row-start-1 row-end-2 h-full w-full bg-muted'></Card>
+            <Card className='col-start-2 col-end-4 row-start-2 row-end-3 h-full w-full bg-muted'></Card>
           </div>
         </section>
 
@@ -162,12 +160,10 @@ export default async function Home() {
             of mind while reliving your special day.
           </p>
 
-          <div className='mt-4 flex aspect-video w-full gap-2 lg:w-3/4'>
-            <Card className='w-2/3 bg-muted'></Card>
-            <div className='flex w-full flex-col gap-2'>
-              <Card className='aspect-video bg-muted'></Card>
-              <Card className='aspect-video bg-muted'></Card>
-            </div>
+          <div className='mt-4 grid aspect-video w-full grid-cols-3 grid-rows-2 gap-2 lg:w-3/4'>
+            <Card className='col-end-2 row-start-1 row-end-3 h-full w-full bg-muted'></Card>
+            <Card className='col-start-2 col-end-4 row-start-1 row-end-2 h-full w-full bg-muted'></Card>
+            <Card className='col-start-2 col-end-4 row-start-2 row-end-3 h-full w-full bg-muted'></Card>
           </div>
         </section>
       </main>

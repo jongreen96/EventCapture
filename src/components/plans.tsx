@@ -17,7 +17,7 @@ export default function Plans({ reference }: { reference: boolean }) {
       </p>
 
       <div className='mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:flex-row'>
-        <Card className='transition-all hover:scale-105'>
+        <Card className='transition-all hover:scale-105 hover:shadow-lg'>
           <CardHeader>
             <CardTitle>Small Plan</CardTitle>
           </CardHeader>
@@ -57,7 +57,7 @@ export default function Plans({ reference }: { reference: boolean }) {
           </CardFooter>
         </Card>
 
-        <Card className='transition-all hover:scale-105'>
+        <Card className='transition-all hover:scale-105 hover:shadow-lg'>
           <CardHeader>
             <CardTitle>Medium Plan</CardTitle>
           </CardHeader>
@@ -99,7 +99,7 @@ export default function Plans({ reference }: { reference: boolean }) {
           </CardFooter>
         </Card>
 
-        <Card className='transition-all hover:scale-105'>
+        <Card className='transition-all hover:scale-105 hover:shadow-lg'>
           <CardHeader>
             <CardTitle>Large Plan</CardTitle>
           </CardHeader>
@@ -144,7 +144,7 @@ export default function Plans({ reference }: { reference: boolean }) {
           </CardFooter>
         </Card>
 
-        <Card className='transition-all hover:scale-105'>
+        <Card className='transition-all hover:scale-105 hover:shadow-lg'>
           <CardHeader>
             <CardTitle>Gigantic Plan</CardTitle>
           </CardHeader>

@@ -7,7 +7,7 @@ export default async function PlansPage() {
   if (!session?.user) redirect('/');
 
   return (
-    <main className='flex min-h-svh items-center justify-between'>
+    <main>
       <Plans reference={false} />
     </main>
   );
