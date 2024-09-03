@@ -1,4 +1,4 @@
-import Plans from '@/components/plans';
+import Plans from '@/app/plans/_components/plans';
 import SignUpForm from '@/components/sign-up-form';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import getSession from '@/lib/getSession';

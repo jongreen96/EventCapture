@@ -1,14 +1,23 @@
-import { Button } from './ui/button';
+'use client';
+
+import { buyPlanAction } from '@/app/actions';
+import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
   CardFooter,
   CardHeader,
   CardTitle,
-} from './ui/card';
-import FormFocusButton from './ui/form-focus-button';
+} from '@/components/ui/card';
+import FormFocusButton from '@/components/ui/form-focus-button';
 
-export default function Plans({ reference }: { reference: boolean }) {
+export default function Plans({
+  reference,
+  userId,
+}: {
+  reference: boolean;
+  userId?: string;
+}) {
   return (
     <section className='container flex flex-col items-center p-4 text-center'>
       <h2 className='max-w-prose text-3xl font-semibold'>Plans & Prices</h2>
@@ -38,11 +47,13 @@ export default function Plans({ reference }: { reference: boolean }) {
             {reference ? (
               <FormFocusButton />
             ) : (
-              <Button asChild className='w-full'>
-                <a href='' target='_blank' rel='noreferrer'>
+              <form action={buyPlanAction}>
+                <input type='hidden' name='userId' value={userId} />
+                <input type='hidden' name='plan' value='small' />
+                <Button type='submit' className='w-full'>
                   Buy Now
-                </a>
-              </Button>
+                </Button>
+              </form>
             )}
           </CardContent>
 

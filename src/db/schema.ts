@@ -1,4 +1,5 @@
 import {
+  boolean,
   integer,
   pgTable,
   primaryKey,
@@ -15,6 +16,19 @@ export const users = pgTable('user', {
   email: text('email').unique(),
   emailVerified: timestamp('emailVerified', { mode: 'date' }),
   image: text('image'),
+});
+
+export const plans = pgTable('plan', {
+  id: text('id')
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  user: text('user')
+    .notNull()
+    .references(() => users.id),
+  plan: text('plan'),
+  pricePaidInCents: integer('pricePaid'),
+  endDate: timestamp('endDate', { mode: 'date' }),
+  expired: boolean('expired'),
 });
 
 export const accounts = pgTable(
