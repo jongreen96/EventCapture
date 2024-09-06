@@ -21,5 +21,5 @@ export async function buyPlanAction(formData: FormData) {
 
   await addUserPlan(data.userId.toString(), data.plan.toString());
 
-  redirect('/admin');
+  redirect('/dashboard');
 }

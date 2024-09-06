@@ -2,7 +2,7 @@ import { getUserPlans } from '@/db/queries';
 import getSession from '@/lib/getSession';
 import { redirect } from 'next/navigation';
 
-export default async function AdminPage() {
+export default async function DashboardPage() {
   const session = await getSession();
   if (!session?.user?.id) redirect('/');
 
@@ -10,5 +10,5 @@ export default async function AdminPage() {
 
   if (!plans) redirect('/plans');
 
-  return <p>admin</p>;
+  return <p>dashboard</p>;
 }

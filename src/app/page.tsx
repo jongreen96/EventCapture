@@ -7,7 +7,7 @@ import { Suspense } from 'react';
 
 export default async function Home() {
   const session = await getSession();
-  if (session?.user) redirect('/admin');
+  if (session?.user) redirect('/dashboard');
 
   return (
     <>
@@ -113,11 +113,11 @@ export default async function Home() {
 
         <section className='container flex flex-col items-center p-4 text-center'>
           <h2 className='max-w-prose text-3xl font-semibold'>
-            Seamless Event Management with the Admin Page
+            Seamless Event Management with the Dashboard Page
           </h2>
 
           <p className='max-w-prose text-muted-foreground'>
-            Easily manage your event&apos;s photos with our intuitive Admin
+            Easily manage your event&apos;s photos with our intuitive Dashboard
             Page. Organize, review, and download all shared images with just a
             few clicks. Stay in control and ensure only the best memories are
             preserved.
