@@ -13,6 +13,7 @@ services:
       - POSTGRES_DB=event-capture
       - POSTGRES_PORT=5432
       - POSTGRES_SSLMODE=disable
+      - AUTH_DRIZZLE_URL=postgres://postgres:postgres@db:5432/event-capture
     depends_on:
       db:
         condition: service_healthy
