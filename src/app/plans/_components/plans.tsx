@@ -1,7 +1,5 @@
 'use client';
 
-import { buyPlanAction } from '@/app/actions';
-import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
@@ -10,13 +8,41 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import FormFocusButton from '@/components/ui/form-focus-button';
+import PlanDialog from './plan-dialog';
+
+export const plansData = {
+  small: {
+    name: 'small',
+    price: 5,
+    duration: 3,
+    guests: Infinity,
+  },
+  medium: {
+    name: 'medium',
+    price: 40,
+    duration: 3,
+    guests: Infinity,
+  },
+  large: {
+    name: 'large',
+    price: 100,
+    duration: 3,
+    guests: Infinity,
+  },
+  enterprise: {
+    name: 'enterprise',
+    price: 500,
+    duration: 3,
+    guests: Infinity,
+  },
+};
 
 export default function Plans({
   reference,
   userId,
 }: {
   reference: boolean;
-  userId?: string;
+  userId: string;
 }) {
   return (
     <section className='container flex flex-col items-center p-4 text-center'>
@@ -37,9 +63,14 @@ export default function Plans({
                 <span className='font-normal'>$</span>5
               </p>
               <div className='whitespace-nowrap text-xs'>
-                <p>3 months storage</p>
+                <p>{plansData.small.duration} months storage</p>
                 <p>Instant downloads</p>
-                <p>Unlimited guests</p>
+                <p>
+                  {plansData.small.guests === Infinity
+                    ? 'Unlimited'
+                    : plansData.small.guests}{' '}
+                  guests
+                </p>
               </div>
             </div>
             <p className='font-semibold text-primary'>One Time Purchase</p>
@@ -47,13 +78,7 @@ export default function Plans({
             {reference ? (
               <FormFocusButton />
             ) : (
-              <form action={buyPlanAction}>
-                <input type='hidden' name='userId' value={userId} />
-                <input type='hidden' name='plan' value='small' />
-                <Button type='submit' className='w-full'>
-                  Buy Now
-                </Button>
-              </form>
+              <PlanDialog plan={plansData.small} userId={userId} />
             )}
           </CardContent>
 
@@ -76,12 +101,18 @@ export default function Plans({
           <CardContent className='space-y-2'>
             <div className='flex items-center justify-center gap-2 text-left'>
               <p className='text-5xl font-bold text-primary'>
-                <span className='font-normal'>$</span>40
+                <span className='font-normal'>$</span>
+                {plansData.medium.price}
               </p>
               <div className='whitespace-nowrap text-xs'>
-                <p>3 months storage</p>
+                <p>{plansData.medium.duration} months storage</p>
                 <p>Instant downloads</p>
-                <p>Unlimited guests</p>
+                <p>
+                  {plansData.medium.guests === Infinity
+                    ? 'Unlimited'
+                    : plansData.medium.guests}{' '}
+                  guests
+                </p>
               </div>
             </div>
             <p className='font-semibold text-primary'>One Time Purchase</p>
@@ -89,11 +120,7 @@ export default function Plans({
             {reference ? (
               <FormFocusButton />
             ) : (
-              <Button asChild className='w-full'>
-                <a href='' target='_blank' rel='noreferrer'>
-                  Buy Now
-                </a>
-              </Button>
+              <PlanDialog plan={plansData.medium} userId={userId} />
             )}
           </CardContent>
 
@@ -118,12 +145,18 @@ export default function Plans({
           <CardContent className='space-y-2'>
             <div className='flex items-center justify-center gap-2 text-left'>
               <p className='text-5xl font-bold text-primary'>
-                <span className='font-normal'>$</span>100
+                <span className='font-normal'>$</span>
+                {plansData.large.price}
               </p>
               <div className='whitespace-nowrap text-xs'>
-                <p>3 months storage</p>
+                <p>{plansData.large.duration} months storage</p>
                 <p>Instant downloads</p>
-                <p>Unlimited guests</p>
+                <p>
+                  {plansData.large.guests === Infinity
+                    ? 'Unlimited'
+                    : plansData.large.guests}{' '}
+                  guests
+                </p>
               </div>
             </div>
             <p className='font-semibold text-primary'>One Time Purchase</p>
@@ -131,11 +164,7 @@ export default function Plans({
             {reference ? (
               <FormFocusButton />
             ) : (
-              <Button asChild className='w-full'>
-                <a href='' target='_blank' rel='noreferrer'>
-                  Buy Now
-                </a>
-              </Button>
+              <PlanDialog plan={plansData.large} userId={userId} />
             )}
           </CardContent>
 
@@ -157,18 +186,24 @@ export default function Plans({
 
         <Card className='transition-all hover:scale-105 hover:shadow-lg'>
           <CardHeader>
-            <CardTitle>Gigantic Plan</CardTitle>
+            <CardTitle>Enterprise Plan</CardTitle>
           </CardHeader>
 
           <CardContent className='space-y-2'>
             <div className='flex items-center justify-center gap-2 text-left'>
               <p className='text-5xl font-bold text-primary'>
-                <span className='font-normal'>$</span>500
+                <span className='font-normal'>$</span>
+                {plansData.enterprise.price}
               </p>
               <div className='whitespace-nowrap text-xs'>
-                <p>3 months storage</p>
+                <p>{plansData.enterprise.duration} months storage</p>
                 <p>Instant downloads</p>
-                <p>Unlimited guests</p>
+                <p>
+                  {plansData.enterprise.guests === Infinity
+                    ? 'Unlimited'
+                    : plansData.enterprise.guests}{' '}
+                  guests
+                </p>
               </div>
             </div>
             <p className='font-semibold text-primary'>One Time Purchase</p>
@@ -176,11 +211,7 @@ export default function Plans({
             {reference ? (
               <FormFocusButton />
             ) : (
-              <Button asChild className='w-full'>
-                <a href='' target='_blank' rel='noreferrer'>
-                  Buy Now
-                </a>
-              </Button>
+              <PlanDialog plan={plansData.enterprise} userId={userId} />
             )}
           </CardContent>
 

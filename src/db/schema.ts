@@ -26,6 +26,7 @@ export const plans = pgTable('plan', {
     .notNull()
     .references(() => users.id),
   plan: text('plan'),
+  eventName: text('eventName'),
   pricePaidInCents: integer('pricePaid'),
   endDate: timestamp('endDate', { mode: 'date' }),
   expired: boolean('expired'),

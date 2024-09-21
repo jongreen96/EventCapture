@@ -10,11 +10,25 @@ export async function getUserPlans(userId: string) {
   return userPlans;
 }
 
-export async function addUserPlan(userId: string, plan: string) {
+export async function addUserPlan({
+  user,
+  plan,
+  eventName,
+  pricePaid,
+  endDate,
+}: {
+  user: string;
+  plan: string;
+  eventName: string;
+  pricePaid: number;
+  endDate: Date;
+}) {
   await db.insert(plans).values({
-    user: userId,
+    user,
     plan,
-    pricePaidInCents: 0,
-    endDate: new Date(2025, 0, 1),
+    eventName,
+    expired: false,
+    pricePaidInCents: pricePaid * 100,
+    endDate: endDate,
   });
 }
