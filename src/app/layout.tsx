@@ -21,7 +21,7 @@ export default function RootLayout({
     <html lang='en' className='scroll-smooth'>
       <body
         className={cn(
-          'dark mb-6 min-h-screen min-w-[430px] bg-background font-sans antialiased',
+          'dark min-h-screen min-w-[430px] bg-background font-sans antialiased',
           inter.className,
         )}
       >
