@@ -145,7 +145,7 @@ export default async function Home() {
           <Card className='mt-4 aspect-video w-full bg-muted lg:w-3/4'></Card>
         </section>
 
-        <Plans reference />
+        <Plans reference userId='0' />
 
         <section className='container flex flex-col items-center p-4 text-center'>
           <h2 className='max-w-prose text-3xl font-semibold'>
