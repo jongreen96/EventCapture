@@ -1,5 +1,4 @@
 import {
-  boolean,
   integer,
   pgTable,
   primaryKey,
@@ -27,9 +26,8 @@ export const plans = pgTable('plan', {
     .references(() => users.id),
   plan: text('plan'),
   eventName: text('eventName'),
-  pricePaidInCents: integer('pricePaid'),
+  pricePaid: integer('pricePaid'),
   endDate: timestamp('endDate', { mode: 'date' }),
-  expired: boolean('expired'),
 });
 
 export const accounts = pgTable(

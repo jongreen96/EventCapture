@@ -1,7 +1,6 @@
 'use server';
 
 import { signIn, signOut } from '@/auth';
-import { addUserPlan } from '@/db/queries';
 import { redirect } from 'next/navigation';
 import { z } from 'zod';
 
@@ -22,10 +21,8 @@ export async function buyPlanAction(formData: FormData) {
 
   const buyPlanSchema = z.object({
     user: z.string().min(1),
-    plan: z.string().min(1),
+    plan: z.enum(['small', 'medium', 'large', 'enterprise']),
     eventName: z.string().min(1),
-    pricePaid: z.coerce.number().min(5),
-    endDate: z.coerce.date(),
   });
 
   const parsedData = buyPlanSchema.safeParse(data);
@@ -33,8 +30,9 @@ export async function buyPlanAction(formData: FormData) {
     console.log(parsedData.error);
     return;
   }
+  const userData = parsedData.data;
 
-  await addUserPlan(parsedData.data);
+  // await addUserPlan(userData);
 
   redirect('/dashboard');
 }

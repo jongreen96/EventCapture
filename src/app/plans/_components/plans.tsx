@@ -1,5 +1,3 @@
-'use client';
-
 import {
   Card,
   CardContent,
@@ -60,7 +58,7 @@ export default function Plans({
           <CardContent className='space-y-2'>
             <div className='flex items-center justify-center gap-2 text-left'>
               <p className='text-5xl font-bold text-primary'>
-                <span className='font-normal'>$</span>5
+                <span className='font-normal'>£</span>5
               </p>
               <div className='whitespace-nowrap text-xs'>
                 <p>{plansData.small.duration} months storage</p>
@@ -101,7 +99,7 @@ export default function Plans({
           <CardContent className='space-y-2'>
             <div className='flex items-center justify-center gap-2 text-left'>
               <p className='text-5xl font-bold text-primary'>
-                <span className='font-normal'>$</span>
+                <span className='font-normal'>£</span>
                 {plansData.medium.price}
               </p>
               <div className='whitespace-nowrap text-xs'>
@@ -145,7 +143,7 @@ export default function Plans({
           <CardContent className='space-y-2'>
             <div className='flex items-center justify-center gap-2 text-left'>
               <p className='text-5xl font-bold text-primary'>
-                <span className='font-normal'>$</span>
+                <span className='font-normal'>£</span>
                 {plansData.large.price}
               </p>
               <div className='whitespace-nowrap text-xs'>
@@ -192,7 +190,7 @@ export default function Plans({
           <CardContent className='space-y-2'>
             <div className='flex items-center justify-center gap-2 text-left'>
               <p className='text-5xl font-bold text-primary'>
-                <span className='font-normal'>$</span>
+                <span className='font-normal'>£</span>
                 {plansData.enterprise.price}
               </p>
               <div className='whitespace-nowrap text-xs'>
