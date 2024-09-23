@@ -13,7 +13,7 @@ export default async function DashboardPage() {
   return <Dashboard plan={plan} />;
 }
 
-async function retryGetUserPlans(userId: string, retries = 3, delay = 100) {
+async function retryGetUserPlans(userId: string, retries = 3, delay = 1000) {
   for (let attempt = 1; attempt <= retries; attempt++) {
     const plan = await getUserPlans(userId);
     if (plan) return plan;
