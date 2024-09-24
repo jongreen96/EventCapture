@@ -14,9 +14,11 @@ export async function getUserPlans(userId: string) {
 export async function addUserPlan({
   user,
   plan,
+  eventName,
 }: {
   user: string;
   plan: 'enterprise' | 'small' | 'medium' | 'large';
+  eventName: string;
 }) {
   const today = new Date();
   const endDate = new Date(
@@ -26,7 +28,7 @@ export async function addUserPlan({
   await db.insert(plans).values({
     user,
     plan,
-    eventName: `${plan} plan`,
+    eventName,
     pricePaid: plansData[plan].price,
     endDate,
   });

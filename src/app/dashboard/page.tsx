@@ -8,7 +8,7 @@ export default async function DashboardPage() {
   if (!session?.user?.id) redirect('/');
 
   const plans = await retryGetUserPlans(session.user.id);
-  if (!plans) redirect('/plans');
+  if (!plans || plans.length === 0) redirect('/plans');
 
   return <Dashboard plans={plans} />;
 }

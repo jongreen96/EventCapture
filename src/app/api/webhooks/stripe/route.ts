@@ -14,8 +14,7 @@ export async function POST(req: NextRequest) {
   if (event.type === 'charge.succeeded') {
     const charge = event.data.object;
     const { plan, userId } = charge.metadata;
-
-    console.log(plan + ' ' + userId);
+    const eventName = charge.billing_details.name || plan;
 
     if (
       plan !== 'enterprise' &&
@@ -28,6 +27,7 @@ export async function POST(req: NextRequest) {
     await addUserPlan({
       user: userId,
       plan,
+      eventName,
     });
 
     return new NextResponse('OK', { status: 200 });

@@ -1,6 +1,8 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import {
   Elements,
   PaymentElement,
@@ -13,15 +15,8 @@ import { FormEvent, useState } from 'react';
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY!);
 
 export default function CheckoutForm({
-  plan,
   clientSecret,
 }: {
-  plan: {
-    name: string;
-    price: number;
-    duration: number;
-    guests: number;
-  };
   clientSecret: string;
 }) {
   return (
@@ -49,6 +44,7 @@ function Form() {
   const elements = useElements();
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [eventName, setEventName] = useState('');
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -60,6 +56,11 @@ function Form() {
         elements,
         confirmParams: {
           return_url: `${process.env.NEXT_PUBLIC_BASE_URL}dashboard`,
+          payment_method_data: {
+            billing_details: {
+              name: eventName,
+            },
+          },
         },
       })
       .then(({ error }) => {
@@ -76,7 +77,20 @@ function Form() {
 
   return (
     <form onSubmit={handleSubmit} className='space-y-4'>
+      <Label htmlFor='eventName' className='font-normal'>
+        Event Name
+      </Label>
+      <Input
+        id='eventName'
+        type='text'
+        placeholder='Eg: Smith wedding'
+        value={eventName}
+        onChange={(e) => setEventName(e.target.value)}
+        className='!mt-1 w-full bg-black placeholder:text-gray-300/40'
+      />
+
       <PaymentElement />
+
       <Button
         type='submit'
         className='w-full'
