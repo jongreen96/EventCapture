@@ -7,11 +7,11 @@ export default async function PlansPage() {
   const session = await getSession();
   if (!session?.user?.id) redirect('/');
   const plan = await getUserPlans(session.user.id);
-  if (plan) redirect('/dashboard');
 
   return (
     <main>
       <Plans reference={false} userId={session.user.id} />
+      {/* TODO: Show currently active plans */}
     </main>
   );
 }

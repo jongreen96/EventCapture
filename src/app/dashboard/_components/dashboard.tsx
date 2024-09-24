@@ -1,20 +1,23 @@
 'use client';
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import type { Plan } from '@/db/schema';
 import { useState } from 'react';
 import Guests from './guests';
 import Overview from './overview';
 import Photos from './photos';
+import PlanSelector from './plan-selector';
 import Settings from './settings';
 import Usage from './usage';
 
-export default function Dashboard({ plan }: any) {
+export default function Dashboard({ plans }: { plans: Plan[] }) {
   let [tab, setTab] = useState('overview');
 
   return (
     <main className='container mx-auto mt-6 space-y-4'>
-      <div>
+      <div className='flex items-center justify-between'>
         <h1 className='text-4xl font-bold tracking-tight'>Dashboard</h1>
+        <PlanSelector plans={plans} />
       </div>
 
       <Tabs value={tab}>
@@ -37,7 +40,7 @@ export default function Dashboard({ plan }: any) {
         </TabsList>
 
         <TabsContent value='overview'>
-          <Overview plan={plan} setTab={setTab} />
+          <Overview plan={plans[0]} setTab={setTab} />
         </TabsContent>
         <TabsContent value='photos'>
           <Photos />

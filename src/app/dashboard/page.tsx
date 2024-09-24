@@ -7,11 +7,13 @@ export default async function DashboardPage() {
   const session = await getSession();
   if (!session?.user?.id) redirect('/');
 
-  const plan = await retryGetUserPlans(session.user.id);
-  if (!plan) redirect('/plans');
+  const plans = await retryGetUserPlans(session.user.id);
+  if (!plans) redirect('/plans');
 
-  return <Dashboard plan={plan} />;
+  return <Dashboard plans={plans} />;
 }
+
+// TODO: Update URL to show currently active plan?
 
 async function retryGetUserPlans(userId: string, retries = 3, delay = 1000) {
   for (let attempt = 1; attempt <= retries; attempt++) {

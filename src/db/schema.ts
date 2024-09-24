@@ -1,3 +1,4 @@
+import { InferSelectModel } from 'drizzle-orm';
 import {
   integer,
   pgTable,
@@ -24,10 +25,10 @@ export const plans = pgTable('plan', {
   user: text('user')
     .notNull()
     .references(() => users.id),
-  plan: text('plan'),
-  eventName: text('eventName'),
-  pricePaid: integer('pricePaid'),
-  endDate: timestamp('endDate', { mode: 'date' }),
+  plan: text('plan').notNull(),
+  eventName: text('eventName').notNull(),
+  pricePaid: integer('pricePaid').notNull(),
+  endDate: timestamp('endDate', { mode: 'date' }).notNull(),
 });
 
 export const accounts = pgTable(
@@ -75,3 +76,7 @@ export const verificationTokens = pgTable(
     }),
   }),
 );
+
+// Types
+export type User = InferSelectModel<typeof users>;
+export type Plan = InferSelectModel<typeof plans>;

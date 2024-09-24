@@ -4,7 +4,7 @@ import { db } from './db';
 import { plans } from './schema';
 
 export async function getUserPlans(userId: string) {
-  const userPlans = await db.query.plans.findFirst({
+  const userPlans = await db.query.plans.findMany({
     where: eq(plans.user, userId),
   });
 
