@@ -1,3 +1,5 @@
+'use client';
+
 import tempimage from '@/assets/userImagePlaceholder.jpg';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -9,14 +11,15 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { BarChart3, Calendar, Image as ImageIcon, User } from 'lucide-react';
+import { Plan } from '@/db/schema';
+import { BarChart3, Calendar, ImageIcon, User } from 'lucide-react';
 import Image from 'next/image';
 
-export default function Overview({ plan, setTab }: any) {
+export default function Overview({ plan }: { plan: Plan }) {
   return (
     <div className='space-y-4'>
       <section className='grid grid-cols-2 gap-4 md:grid-cols-4'>
-        <Card onClick={() => setTab('photos')} className='cursor-pointer'>
+        <Card className='cursor-pointer'>
           <CardHeader className='pb-0'>
             <CardTitle className='flex items-center gap-2 text-base'>
               <ImageIcon className='size-4 text-muted-foreground' />
@@ -28,7 +31,7 @@ export default function Overview({ plan, setTab }: any) {
           </CardContent>
         </Card>
 
-        <Card onClick={() => setTab('guests')} className='cursor-pointer'>
+        <Card className='cursor-pointer'>
           <CardHeader className='pb-0'>
             <CardTitle className='flex items-center gap-2 text-base'>
               <User className='size-4 text-muted-foreground' /> Guests
@@ -39,7 +42,7 @@ export default function Overview({ plan, setTab }: any) {
           </CardContent>
         </Card>
 
-        <Card onClick={() => setTab('usage')} className='cursor-pointer'>
+        <Card className='cursor-pointer'>
           <CardHeader className='pb-0'>
             <CardTitle className='flex items-center gap-2 text-base'>
               <BarChart3 className='size-4 text-muted-foreground' />
@@ -53,7 +56,7 @@ export default function Overview({ plan, setTab }: any) {
           </CardContent>
         </Card>
 
-        <Card onClick={() => setTab('usage')} className='cursor-pointer'>
+        <Card className='cursor-pointer'>
           <CardHeader className='pb-0'>
             <CardTitle className='flex items-center gap-2 text-base'>
               <Calendar className='size-4 text-muted-foreground' />
@@ -61,7 +64,9 @@ export default function Overview({ plan, setTab }: any) {
             </CardTitle>
           </CardHeader>
           <CardContent className='text-5xl font-semibold tracking-tight'>
-            27
+            {Math.floor(
+              (plan.endDate.getTime() - new Date().getTime()) / 86_400_000,
+            )}
           </CardContent>
         </Card>
       </section>
@@ -71,9 +76,7 @@ export default function Overview({ plan, setTab }: any) {
           <CardHeader>
             <CardTitle className='flex items-center justify-between gap-2'>
               Photos
-              <Button variant='outline' onClick={() => setTab('photos')}>
-                View All
-              </Button>
+              <Button variant='outline'>View All</Button>
             </CardTitle>
           </CardHeader>
           <CardContent className='flex flex-wrap gap-2'>
@@ -100,9 +103,7 @@ export default function Overview({ plan, setTab }: any) {
           <CardHeader>
             <CardTitle className='flex items-center justify-between gap-2'>
               Guests
-              <Button variant='outline' onClick={() => setTab('guests')}>
-                View All
-              </Button>
+              <Button variant='outline'>View All</Button>
             </CardTitle>
           </CardHeader>
           <CardContent>

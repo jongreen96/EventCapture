@@ -1,7 +1,15 @@
 import { plansData } from '@/app/plans/_components/plans';
-import { eq } from 'drizzle-orm';
+import { and, eq } from 'drizzle-orm';
 import { db } from './db';
 import { plans } from './schema';
+
+export async function getUserPlan(userId: string, eventName: string) {
+  const plan = await db.query.plans.findFirst({
+    where: and(eq(plans.user, userId), eq(plans.eventName, eventName)),
+  });
+
+  return plan;
+}
 
 export async function getUserPlans(userId: string) {
   const userPlans = await db.query.plans.findMany({

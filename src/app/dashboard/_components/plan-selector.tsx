@@ -15,11 +15,25 @@ import {
 } from '@/components/ui/popover';
 import type { Plan } from '@/db/schema';
 import { ChevronDown } from 'lucide-react';
-import { useState } from 'react';
+import { redirect } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
-export default function PlanSelector({ plans }: { plans: Plan[] }) {
+export default function PlanSelector({
+  plans,
+  params,
+}: {
+  plans: Plan[];
+  params: { event: string };
+}) {
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState(plans[0]?.eventName || '');
+  const [value, setValue] = useState(decodeURIComponent(params.event) || '');
+
+  // Redirect to selected plan
+  useEffect(() => {
+    if (decodeURIComponent(params.event) !== value) {
+      redirect(`/dashboard/${encodeURIComponent(value)}/overview`);
+    }
+  }, [params.event, value]);
 
   return (
     <div className='flex items-center gap-2'>
@@ -63,4 +77,3 @@ export default function PlanSelector({ plans }: { plans: Plan[] }) {
 }
 
 // TODO: Add new plan button to bottom of combobox
-// TODO: Link plan selector to dashboard logic

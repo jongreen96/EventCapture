@@ -1,29 +1,19 @@
 import { getUserPlans } from '@/db/queries';
 import getSession from '@/lib/getSession';
 import { redirect } from 'next/navigation';
-import Dashboard from './_components/dashboard';
+import PlanSelector from './_components/plan-selector';
 
 export default async function DashboardPage() {
   const session = await getSession();
   if (!session?.user?.id) redirect('/');
 
-  const plans = await retryGetUserPlans(session.user.id);
-  if (!plans || plans.length === 0) redirect('/plans');
+  const plans = await getUserPlans(session.user.id);
+  if (plans.length === 1)
+    redirect(`/dashboard/${encodeURIComponent(plans[0].eventName)}/overview`);
 
-  return <Dashboard plans={plans} />;
-}
-
-// TODO: Update URL to show currently active plan?
-
-async function retryGetUserPlans(userId: string, retries = 3, delay = 1000) {
-  for (let attempt = 1; attempt <= retries; attempt++) {
-    const plan = await getUserPlans(userId);
-    if (plan !== null && plan.length > 0) return plan;
-
-    if (attempt < retries) {
-      await new Promise((resolve) => setTimeout(resolve, delay * attempt));
-    }
-  }
-
-  return null;
+  return (
+    <div className='flex justify-center pt-[calc(35dvh)]'>
+      <PlanSelector plans={plans} params={{ event: '' }} />
+    </div>
+  );
 }
