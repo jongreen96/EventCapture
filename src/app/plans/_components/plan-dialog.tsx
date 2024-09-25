@@ -100,7 +100,7 @@ export default async function PlanDialog({
           </TableBody>
         </Table>
 
-        <CheckoutForm plan={plan} clientSecret={paymentIntent.client_secret} />
+        <CheckoutForm clientSecret={paymentIntent.client_secret} />
       </DialogContent>
     </Dialog>
   );
