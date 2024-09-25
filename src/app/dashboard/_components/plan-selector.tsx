@@ -37,14 +37,14 @@ export default function PlanSelector({
             variant='outline'
             role='combobox'
             aria-expanded={open}
-            className='w-[200px] justify-between'
+            className='w-52 justify-between'
           >
             {value || 'Choose a plan'}
             <ChevronDown className='ml-2 h-4 w-4 opacity-50' />
           </Button>
         </PopoverTrigger>
 
-        <PopoverContent className='w-[200px] p-0'>
+        <PopoverContent className='w-52 p-0'>
           <Command>
             <CommandInput placeholder='Search plan...' />
             <CommandList>
