@@ -12,10 +12,15 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { Plan } from '@/db/schema';
+import { cn } from '@/lib/utils';
 import { BarChart3, Calendar, ImageIcon, User } from 'lucide-react';
 import Image from 'next/image';
 
 export default function Overview({ plan }: { plan: Plan }) {
+  const hoursRemaining = Math.floor(
+    (plan.endDate.getTime() - new Date().getTime()) / 1000 / 60 / 60,
+  );
+
   return (
     <div className='space-y-4'>
       <section className='grid grid-cols-2 gap-4 md:grid-cols-4'>
@@ -56,17 +61,22 @@ export default function Overview({ plan }: { plan: Plan }) {
           </CardContent>
         </Card>
 
-        <Card className='cursor-pointer'>
+        <Card
+          className={cn(
+            'cursor-pointer',
+            hoursRemaining < 24 && 'bg-destructive/20',
+          )}
+        >
           <CardHeader className='pb-0'>
             <CardTitle className='flex items-center gap-2 text-base'>
               <Calendar className='size-4 text-muted-foreground' />
-              Days Remaining
+              {hoursRemaining > 24 ? 'Days Remaining' : 'Hours Remaining'}
             </CardTitle>
           </CardHeader>
           <CardContent className='text-5xl font-semibold tracking-tight'>
-            {Math.floor(
-              (plan.endDate.getTime() - new Date().getTime()) / 86_400_000,
-            )}
+            {hoursRemaining > 24
+              ? Math.floor(hoursRemaining / 24)
+              : hoursRemaining}
           </CardContent>
         </Card>
       </section>
