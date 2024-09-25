@@ -23,7 +23,7 @@ export default function PlanSelector({ plans }: { plans: Plan[] }) {
 
   return (
     <div className='flex items-center gap-2'>
-      <p>Plan:</p>
+      <p className='font-bold'>Plan:</p>
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button
@@ -43,15 +43,15 @@ export default function PlanSelector({ plans }: { plans: Plan[] }) {
             <CommandList>
               <CommandEmpty>No plan found.</CommandEmpty>
 
-              {plans.map((plan: Plan) => (
+              {plans.map((plan: Plan, index) => (
                 <CommandItem
-                  key={plan.plan}
+                  key={index}
                   onSelect={() => {
                     setValue(plan.eventName);
                     setOpen(false);
                   }}
                 >
-                  {plan.eventName}
+                  {index + 1}. {plan.eventName}
                 </CommandItem>
               ))}
             </CommandList>
