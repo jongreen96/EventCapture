@@ -14,9 +14,9 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 import type { Plan } from '@/db/schema';
-import { ChevronDown } from 'lucide-react';
-import { redirect } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { ChevronDown, Plus } from 'lucide-react';
+import Link from 'next/link';
+import { useState } from 'react';
 
 export default function PlanSelector({
   plans,
@@ -27,13 +27,6 @@ export default function PlanSelector({
 }) {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(decodeURIComponent(params.event) || '');
-
-  // Redirect to selected plan
-  useEffect(() => {
-    if (decodeURIComponent(params.event) !== value) {
-      redirect(`/dashboard/${encodeURIComponent(value)}/overview`);
-    }
-  }, [params.event, value]);
 
   return (
     <div className='flex items-center gap-2'>
@@ -58,16 +51,33 @@ export default function PlanSelector({
               <CommandEmpty>No plan found.</CommandEmpty>
 
               {plans.map((plan: Plan, index) => (
-                <CommandItem
+                <Link
                   key={index}
+                  href={`/dashboard/${encodeURIComponent(plan.eventName)}/overview`}
+                >
+                  <CommandItem
+                    key={index}
+                    onSelect={() => {
+                      setValue(plan.eventName);
+                      setOpen(false);
+                    }}
+                  >
+                    {index + 1}.&nbsp;&nbsp; {plan.eventName}
+                  </CommandItem>
+                </Link>
+              ))}
+
+              <Link href='/plans'>
+                <CommandItem
                   onSelect={() => {
-                    setValue(plan.eventName);
+                    setValue('');
                     setOpen(false);
                   }}
                 >
-                  {index + 1}. {plan.eventName}
+                  <Plus className='mr-2 h-4 w-4 opacity-50' />
+                  Add new plan
                 </CommandItem>
-              ))}
+              </Link>
             </CommandList>
           </Command>
         </PopoverContent>
