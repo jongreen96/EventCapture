@@ -18,10 +18,10 @@ export default async function DashboardPage() {
 async function retryGetUserPlans(userId: string, retries = 3, delay = 1000) {
   for (let attempt = 1; attempt <= retries; attempt++) {
     const plan = await getUserPlans(userId);
-    if (plan) return plan;
+    if (plan !== null && plan.length > 0) return plan;
 
     if (attempt < retries) {
-      await new Promise((resolve) => setTimeout(resolve, delay));
+      await new Promise((resolve) => setTimeout(resolve, delay * attempt));
     }
   }
 
