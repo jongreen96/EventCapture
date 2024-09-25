@@ -30,9 +30,6 @@ export async function POST(req: NextRequest) {
       eventName,
     });
 
-    // Await for Stripe to process the charge
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-
     return new NextResponse('OK', { status: 200 });
   }
 

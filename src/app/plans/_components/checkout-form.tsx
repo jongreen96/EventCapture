@@ -10,6 +10,7 @@ import {
   useStripe,
 } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
+import { useRouter } from 'next/navigation';
 import { FormEvent, useState } from 'react';
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY!);
@@ -45,6 +46,7 @@ function Form() {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [eventName, setEventName] = useState('');
+  const router = useRouter();
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -54,8 +56,8 @@ function Form() {
     stripe
       .confirmPayment({
         elements,
+        redirect: 'if_required',
         confirmParams: {
-          return_url: `${process.env.NEXT_PUBLIC_BASE_URL}dashboard`,
           payment_method_data: {
             billing_details: {
               name: eventName,
@@ -63,16 +65,14 @@ function Form() {
           },
         },
       })
-      .then(({ error }) => {
-        setIsLoading(false);
-
-        if (error.type === 'card_error' || error.type === 'validation_error') {
-          setErrorMessage(error.message!);
-        } else {
-          setErrorMessage('An unexpected error occurred.');
+      .then(async ({ paymentIntent }: any) => {
+        if (paymentIntent && paymentIntent.status === 'succeeded') {
+          // Add 1s delay to avoid race condition
+          await new Promise((resolve) => setTimeout(resolve, 1000));
+          router.push('/dashboard');
         }
-      })
-      .finally(() => setIsLoading(false));
+        setIsLoading(false);
+      });
   }
 
   return (
