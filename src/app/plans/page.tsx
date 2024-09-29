@@ -46,8 +46,8 @@ export default async function PlansPage() {
                     new Date(a.endDate).getTime() -
                     new Date(b.endDate).getTime(),
                 )
-                .map((plan) => (
-                  <TableRow key={plan.id}>
+                .map((plan, index) => (
+                  <TableRow key={index}>
                     <TableCell>{plan.eventName}</TableCell>
                     <TableCell>
                       {new Date(plan.endDate).toLocaleDateString('en-GB', {

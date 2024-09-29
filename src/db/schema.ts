@@ -1,5 +1,6 @@
 import { InferSelectModel } from 'drizzle-orm';
 import {
+  boolean,
   integer,
   pgTable,
   primaryKey,
@@ -29,6 +30,9 @@ export const plans = pgTable('plan', {
   eventName: text('eventName').notNull(),
   pricePaid: integer('pricePaid').notNull(),
   endDate: timestamp('endDate', { mode: 'date' }).notNull(),
+  pauseUploads: boolean('pauseUploads').notNull().default(false),
+  url: text('url').notNull().unique(),
+  pin: text('pin'),
 });
 
 export const accounts = pgTable(
