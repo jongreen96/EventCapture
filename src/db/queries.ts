@@ -5,7 +5,15 @@ import { plans } from './schema';
 
 export async function getUserPlan(userId: string, eventName: string) {
   const plan = await db.query.plans.findFirst({
-    where: and(eq(plans.user, userId), eq(plans.eventName, eventName)),
+    columns: {
+      user: false,
+      pricePaid: false,
+    },
+    where: and(
+      eq(plans.user, userId),
+      eq(plans.eventName, eventName),
+      gt(plans.endDate, new Date()),
+    ),
   });
 
   return plan;
@@ -13,11 +21,11 @@ export async function getUserPlan(userId: string, eventName: string) {
 
 export async function getUserPlans(userId: string) {
   const userPlans = await db.query.plans.findMany({
-    where: and(
-      eq(plans.user, userId),
-      // plan is not expired
-      gt(plans.endDate, new Date()),
-    ),
+    columns: {
+      user: false,
+      pricePaid: false,
+    },
+    where: and(eq(plans.user, userId), gt(plans.endDate, new Date())),
   });
 
   return userPlans;
