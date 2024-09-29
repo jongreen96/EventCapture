@@ -11,6 +11,9 @@ export default async function DashboardPage() {
   const plans = await retryGetUserPlans(session.user.id);
   if (!plans || plans.length === 0) redirect('/plans');
 
+  if (plans.length === 1)
+    redirect(`/dashboard/${encodeURIComponent(plans[0].eventName)}/overview`);
+
   return (
     <div>
       <PlanSelector plans={plans} params={{ event: '' }} />
