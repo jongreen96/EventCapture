@@ -6,5 +6,10 @@ import Resend from 'next-auth/providers/resend';
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: DrizzleAdapter(db),
-  providers: [Google, Resend],
+  providers: [
+    Google,
+    Resend({
+      from: 'Event Capture <no-reply@event-capture.jongreen.dev>',
+    }),
+  ],
 });

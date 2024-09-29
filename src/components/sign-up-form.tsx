@@ -19,9 +19,9 @@ export default function SignUpForm() {
       <CardContent className='p-4'>
         <form action={signUpFormAction} className='flex flex-col space-y-2'>
           <Input
-            type='text'
+            type='email'
             name='email'
-            id='email'
+            id='email-resend'
             placeholder='Enter your email...'
             autoComplete='email'
             autoFocus
