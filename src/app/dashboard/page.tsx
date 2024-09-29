@@ -8,9 +8,8 @@ export default async function DashboardPage() {
   const session = await getSession();
   if (!session?.user?.id) redirect('/');
 
-  const plans = await getUserPlans(session.user.id);
-  if (plans.length === 1)
-    redirect(`/dashboard/${encodeURIComponent(plans[0].eventName)}/overview`);
+  const plans = await retryGetUserPlans(session.user.id);
+  if (!plans || plans.length === 0) redirect('/plans');
 
   return (
     <div>
@@ -21,4 +20,17 @@ export default async function DashboardPage() {
       </div>
     </div>
   );
+}
+
+async function retryGetUserPlans(userId: string, retries = 3, delay = 1000) {
+  for (let attempt = 1; attempt <= retries; attempt++) {
+    const plans = await getUserPlans(userId);
+    if (plans !== null && plans.length > 0) return plans;
+
+    if (attempt < retries) {
+      await new Promise((resolve) => setTimeout(resolve, delay * attempt));
+    }
+  }
+
+  return null;
 }
