@@ -13,7 +13,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
-import type { Plan } from '@/db/schema';
+import type { Plans } from '@/db/schema';
 import { ChevronDown, Plus } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -22,7 +22,7 @@ export default function PlanSelector({
   plans,
   params,
 }: {
-  plans: Plan[];
+  plans: Plans[];
   params: { event: string };
 }) {
   const [open, setOpen] = useState(false);
@@ -50,7 +50,7 @@ export default function PlanSelector({
             <CommandList>
               <CommandEmpty>No plan found.</CommandEmpty>
 
-              {plans.map((plan: Plan, index) => (
+              {plans.map((plan: Plans, index) => (
                 <Link
                   key={index}
                   href={`/dashboard/${encodeURIComponent(plan.eventName)}/overview`}

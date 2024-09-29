@@ -83,4 +83,11 @@ export const verificationTokens = pgTable(
 
 // Types
 export type User = InferSelectModel<typeof users>;
-export type Plan = InferSelectModel<typeof plans>;
+export type Plan = Omit<
+  InferSelectModel<typeof plans>,
+  'id' | 'user' | 'pricePaid' | 'pin'
+>;
+export type Plans = Pick<
+  InferSelectModel<typeof plans>,
+  'eventName' | 'endDate'
+>;

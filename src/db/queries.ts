@@ -4,6 +4,8 @@ import { nanoid } from 'nanoid';
 import { db } from './db';
 import { plans } from './schema';
 
+// PLANS QUERIES
+
 export async function getUserPlan(userId: string, eventName: string) {
   const plan = await db.query.plans.findFirst({
     columns: {
@@ -41,7 +43,7 @@ export async function addUserPlan({
   eventName,
 }: {
   user: string;
-  plan: 'enterprise' | 'small' | 'medium' | 'large';
+  plan: 'small' | 'medium' | 'large' | 'enterprise';
   eventName: string;
 }) {
   const today = new Date();
@@ -49,7 +51,7 @@ export async function addUserPlan({
     today.setMonth(today.getMonth() + plansData[plan].duration),
   );
 
-  const url = `${process.env.BASE_URL}${nanoid(10)}`;
+  const url = `${process.env.NEXT_PUBLIC_BASE_URL}${nanoid(10)}`;
 
   await db.insert(plans).values({
     user,
@@ -59,4 +61,21 @@ export async function addUserPlan({
     endDate,
     url,
   });
+}
+
+export async function updatePause({
+  userId,
+  eventName,
+  pauseUploads,
+}: {
+  userId: string;
+  eventName: string;
+  pauseUploads: boolean;
+}) {
+  await db
+    .update(plans)
+    .set({ pauseUploads: !pauseUploads })
+    .where(and(eq(plans.user, userId), eq(plans.eventName, eventName)));
+
+  return true;
 }

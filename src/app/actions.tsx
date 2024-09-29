@@ -1,6 +1,10 @@
 'use server';
 
 import { signIn, signOut } from '@/auth';
+import { updatePause } from '@/db/queries';
+import { Plan } from '@/db/schema';
+import getSession from '@/lib/getSession';
+import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { z } from 'zod';
 
@@ -35,4 +39,19 @@ export async function buyPlanAction(formData: FormData) {
   // await addUserPlan(userData);
 
   redirect('/dashboard');
+}
+
+export async function updatePauseAction({ pauseUploads, eventName }: Plan) {
+  const session = await getSession();
+  if (!session?.user?.id) {
+    return Error('Not logged in');
+  }
+
+  await updatePause({
+    pauseUploads,
+    eventName,
+    userId: session.user.id,
+  });
+
+  revalidatePath('/dashboard');
 }
