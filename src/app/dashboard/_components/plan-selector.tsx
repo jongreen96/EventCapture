@@ -85,5 +85,3 @@ export default function PlanSelector({
     </div>
   );
 }
-
-// TODO: Add new plan button to bottom of combobox

@@ -14,7 +14,7 @@ export default async function DashboardPage() {
   return (
     <div>
       <PlanSelector plans={plans} params={{ event: '' }} />
-      <div className='mt-4 flex w-72 flex-col items-center'>
+      <div className='mt-4 flex w-[350px] flex-col items-center'>
         <ArrowBigUp className='h-8 w-8' />
         <p className='text-lg font-bold'>Choose a plan</p>
       </div>
