@@ -64,7 +64,7 @@ export default function Overview({ plan }: { plan: Plan }) {
         <Card
           className={cn(
             'cursor-pointer',
-            hoursRemaining < 24 && 'bg-destructive/20',
+            hoursRemaining < 24 && 'animate-pulse bg-destructive/50',
           )}
         >
           <CardHeader className='pb-0'>
