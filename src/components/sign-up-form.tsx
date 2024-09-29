@@ -22,7 +22,7 @@ export default function SignUpForm() {
             type='text'
             name='email'
             id='email'
-            placeholder='Type your email'
+            placeholder='Enter your email...'
             autoComplete='email'
             autoFocus
             required
@@ -41,7 +41,7 @@ export default function SignUpForm() {
           )}
 
           <Button type='submit' className='w-full'>
-            Capture your moment
+            Sign in with Email
           </Button>
 
           <div className='flex items-center justify-center space-x-2'>
