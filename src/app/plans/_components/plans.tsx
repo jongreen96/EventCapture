@@ -125,7 +125,11 @@ export default function Plans({
             {reference ? (
               <FormFocusButton />
             ) : (
-              <PlanDialog plan={plansData.medium} userId={userId} />
+              <PlanDialog
+                plan={plansData.medium}
+                plans={plans}
+                userId={userId}
+              />
             )}
           </CardContent>
 
@@ -169,7 +173,11 @@ export default function Plans({
             {reference ? (
               <FormFocusButton />
             ) : (
-              <PlanDialog plan={plansData.large} userId={userId} />
+              <PlanDialog
+                plan={plansData.large}
+                plans={plans}
+                userId={userId}
+              />
             )}
           </CardContent>
 
@@ -216,7 +224,11 @@ export default function Plans({
             {reference ? (
               <FormFocusButton />
             ) : (
-              <PlanDialog plan={plansData.enterprise} userId={userId} />
+              <PlanDialog
+                plan={plansData.enterprise}
+                plans={plans}
+                userId={userId}
+              />
             )}
           </CardContent>
 
