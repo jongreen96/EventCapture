@@ -1,7 +1,7 @@
 'use server';
 
 import { signIn, signOut } from '@/auth';
-import { updatePause } from '@/db/queries';
+import { setPin, updatePause } from '@/db/queries';
 import { Plan } from '@/db/schema';
 import getSession from '@/lib/getSession';
 import { revalidatePath } from 'next/cache';
@@ -50,6 +50,34 @@ export async function updatePauseAction({ pauseUploads, eventName }: Plan) {
   await updatePause({
     pauseUploads,
     eventName,
+    userId: session.user.id,
+  });
+
+  revalidatePath('/dashboard');
+}
+
+export async function setPinAction(formData: FormData) {
+  const session = await getSession();
+  if (!session?.user?.id) {
+    return;
+  }
+
+  const data = Object.fromEntries(formData);
+
+  const setPinSchema = z.object({
+    pin: z.string().length(4),
+    eventName: z.string().min(1),
+  });
+
+  const parsedData = setPinSchema.safeParse(data);
+  if (!parsedData.success) {
+    console.log(parsedData.error);
+    return;
+  }
+
+  await setPin({
+    pin: parsedData.data.pin,
+    eventName: parsedData.data.eventName,
     userId: session.user.id,
   });
 

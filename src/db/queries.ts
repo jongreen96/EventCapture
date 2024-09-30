@@ -14,6 +14,7 @@ export async function getUserPlan(userId: string, eventName: string) {
       endDate: true,
       pauseUploads: true,
       url: true,
+      pin: true,
     },
     where: and(
       eq(plans.user, userId),
@@ -51,7 +52,7 @@ export async function addUserPlan({
     today.setMonth(today.getMonth() + plansData[plan].duration),
   );
 
-  const url = `${process.env.NEXT_PUBLIC_BASE_URL}${nanoid(10)}`;
+  const url = `${process.env.NEXT_PUBLIC_BASE_URL}upload/${nanoid(10)}`;
 
   await db.insert(plans).values({
     user,
@@ -76,6 +77,19 @@ export async function updatePause({
     .update(plans)
     .set({ pauseUploads: !pauseUploads })
     .where(and(eq(plans.user, userId), eq(plans.eventName, eventName)));
+}
 
-  return true;
+export async function setPin({
+  pin,
+  eventName,
+  userId,
+}: {
+  pin: string;
+  eventName: string;
+  userId: string;
+}) {
+  await db
+    .update(plans)
+    .set({ pin })
+    .where(and(eq(plans.user, userId), eq(plans.eventName, eventName)));
 }
