@@ -2,6 +2,7 @@
 
 import { setPinAction } from '@/app/actions';
 import { Button } from '@/components/ui/button';
+import { DialogClose } from '@/components/ui/dialog';
 import {
   InputOTP,
   InputOTPGroup,
@@ -29,7 +30,9 @@ export default function SetPin({ plan }: { plan: Plan }) {
           </InputOTPGroup>
         </InputOTP>
 
-        <Button type='submit'>Set Pin</Button>
+        <DialogClose asChild>
+          <Button type='submit'>Set Pin</Button>
+        </DialogClose>
       </form>
     </div>
   );
