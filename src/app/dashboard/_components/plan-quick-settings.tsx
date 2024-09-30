@@ -1,6 +1,16 @@
 'use client';
 
-import { updatePauseAction } from '@/app/actions';
+import { rollUploadLinkAction, updatePauseAction } from '@/app/actions';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import {
@@ -22,10 +32,11 @@ import ShareUploadLinkDialog from './share-upload-link-dialog';
 
 export default function PlanQuickSettings({ plan }: { plan: Plan }) {
   const [openPinDialog, setOpenPinDialog] = useState(false);
+  const [openRollDialog, setOpenRollDialog] = useState(false);
 
   return (
     <div className='flex flex-row-reverse items-center justify-end gap-2 md:flex-row'>
-      {/* TODO: Add Roll link & Sonner */}
+      {/* TODO: Add Sonner */}
       {plan.pauseUploads && (
         <HoverCard>
           <HoverCardTrigger>
@@ -58,9 +69,17 @@ export default function PlanQuickSettings({ plan }: { plan: Plan }) {
           <DropdownMenuItem onClick={() => setOpenPinDialog(true)}>
             Edit Pin
           </DropdownMenuItem>
+
+          <DropdownMenuItem
+            onClick={() => setOpenRollDialog(true)}
+            className='bg-destructive/20'
+          >
+            Roll Link
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
 
+      {/* Upload Link Dialog */}
       <Dialog>
         <DialogTrigger asChild>
           <Button className='w-full md:w-fit'>
@@ -74,11 +93,37 @@ export default function PlanQuickSettings({ plan }: { plan: Plan }) {
         </DialogContent>
       </Dialog>
 
+      {/* Pin Dialog */}
       <Dialog open={openPinDialog} onOpenChange={setOpenPinDialog}>
         <DialogContent className='w-fit'>
           <SetPin plan={plan} />
         </DialogContent>
       </Dialog>
+
+      {/* Roll Dialog */}
+      <AlertDialog open={openRollDialog} onOpenChange={setOpenRollDialog}>
+        <AlertDialogContent className='w-fit'>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This will change the upload link for this plan meaning the
+              previous link will become inactive and cannot be used again.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={() => {
+                setOpenRollDialog(false);
+                rollUploadLinkAction({ plan });
+              }}
+            >
+              Confirm
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }

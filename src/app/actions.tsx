@@ -1,7 +1,7 @@
 'use server';
 
 import { signIn, signOut } from '@/auth';
-import { setPin, updatePause } from '@/db/queries';
+import { rollUploadLink, setPin, updatePause } from '@/db/queries';
 import { Plan } from '@/db/schema';
 import getSession from '@/lib/getSession';
 import { revalidatePath } from 'next/cache';
@@ -78,6 +78,20 @@ export async function setPinAction(formData: FormData) {
   await setPin({
     pin: parsedData.data.pin,
     eventName: parsedData.data.eventName,
+    userId: session.user.id,
+  });
+
+  revalidatePath('/dashboard');
+}
+
+export async function rollUploadLinkAction({ plan }: { plan: Plan }) {
+  const session = await getSession();
+  if (!session?.user?.id) {
+    return;
+  }
+
+  await rollUploadLink({
+    plan,
     userId: session.user.id,
   });
 

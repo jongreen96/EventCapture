@@ -2,7 +2,7 @@ import { plansData } from '@/app/plans/_components/plans';
 import { and, eq, gt } from 'drizzle-orm';
 import { nanoid } from 'nanoid';
 import { db } from './db';
-import { plans } from './schema';
+import { Plan, plans } from './schema';
 
 // PLANS QUERIES
 
@@ -92,4 +92,19 @@ export async function setPin({
     .update(plans)
     .set({ pin })
     .where(and(eq(plans.user, userId), eq(plans.eventName, eventName)));
+}
+
+export async function rollUploadLink({
+  plan,
+  userId,
+}: {
+  plan: Plan;
+  userId: string;
+}) {
+  const url = `${process.env.NEXT_PUBLIC_BASE_URL}upload/${nanoid(10)}`;
+
+  await db
+    .update(plans)
+    .set({ url })
+    .where(and(eq(plans.user, userId), eq(plans.eventName, plan.eventName)));
 }
