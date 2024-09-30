@@ -24,7 +24,7 @@ export default function PlanQuickSettings({ plan }: { plan: Plan }) {
   const [openPinDialog, setOpenPinDialog] = useState(false);
 
   return (
-    <div className='flex items-center justify-between gap-2'>
+    <div className='flex flex-row-reverse items-center justify-end gap-2 md:flex-row'>
       {/* TODO: Add Roll link & Sonner */}
       {plan.pauseUploads && (
         <HoverCard>
@@ -62,12 +62,12 @@ export default function PlanQuickSettings({ plan }: { plan: Plan }) {
       </DropdownMenu>
 
       <Dialog>
-        <Button asChild>
-          <DialogTrigger>
+        <DialogTrigger asChild>
+          <Button className='w-full md:w-fit'>
             <Share2 className='mr-2 h-4 w-4' />
             <span>Share Upload Link</span>
-          </DialogTrigger>
-        </Button>
+          </Button>
+        </DialogTrigger>
 
         <DialogContent>
           <ShareUploadLinkDialog plan={plan} />

@@ -24,7 +24,7 @@ export default async function EventLayout({
 
   return (
     <>
-      <div className='flex flex-wrap justify-between gap-6'>
+      <div className='flex flex-col gap-2 md:flex-row md:justify-between'>
         <PlanSelector plans={plans} params={params} />
         <PlanQuickSettings plan={plan} />
       </div>
