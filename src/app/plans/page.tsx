@@ -20,7 +20,7 @@ export default async function PlansPage() {
 
   return (
     <main>
-      <Plans reference={false} userId={session.user.id} />
+      <Plans reference={false} userId={session.user.id} plans={plans} />
 
       {plans && plans.length > 0 && (
         <section className='container flex flex-col items-center p-4 text-center'>

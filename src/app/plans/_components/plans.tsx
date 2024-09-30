@@ -6,6 +6,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import FormFocusButton from '@/components/ui/form-focus-button';
+import type { Plans } from '@/db/schema';
 import PlanDialog from './plan-dialog';
 
 export const plansData = {
@@ -38,9 +39,11 @@ export const plansData = {
 export default function Plans({
   reference,
   userId,
+  plans,
 }: {
   reference: boolean;
   userId: string;
+  plans: Plans[];
 }) {
   return (
     <section className='container flex flex-col items-center p-4 text-center'>
@@ -76,7 +79,11 @@ export default function Plans({
             {reference ? (
               <FormFocusButton />
             ) : (
-              <PlanDialog plan={plansData.small} userId={userId} />
+              <PlanDialog
+                plan={plansData.small}
+                plans={plans}
+                userId={userId}
+              />
             )}
           </CardContent>
 

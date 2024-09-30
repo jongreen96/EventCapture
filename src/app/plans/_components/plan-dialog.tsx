@@ -7,6 +7,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table';
+import type { Plans } from '@/db/schema';
 import Stripe from 'stripe';
 import CheckoutForm from './checkout-form';
 
@@ -15,6 +16,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 export default async function PlanDialog({
   plan,
   userId,
+  plans,
 }: {
   plan: {
     name: string;
@@ -23,6 +25,7 @@ export default async function PlanDialog({
     guests: number;
   };
   userId: string;
+  plans: Plans[];
 }) {
   const today = new Date();
   const endDate = new Date(today.setMonth(today.getMonth() + plan.duration));
@@ -100,7 +103,10 @@ export default async function PlanDialog({
           </TableBody>
         </Table>
 
-        <CheckoutForm clientSecret={paymentIntent.client_secret} />
+        <CheckoutForm
+          clientSecret={paymentIntent.client_secret}
+          plans={plans}
+        />
       </DialogContent>
     </Dialog>
   );

@@ -6,6 +6,7 @@ import {
   primaryKey,
   text,
   timestamp,
+  unique,
 } from 'drizzle-orm/pg-core';
 import type { AdapterAccountType } from 'next-auth/adapters';
 
@@ -19,21 +20,27 @@ export const users = pgTable('user', {
   image: text('image'),
 });
 
-export const plans = pgTable('plan', {
-  id: text('id')
-    .primaryKey()
-    .$defaultFn(() => crypto.randomUUID()),
-  user: text('user')
-    .notNull()
-    .references(() => users.id),
-  plan: text('plan').notNull(),
-  eventName: text('eventName').notNull(),
-  pricePaid: integer('pricePaid').notNull(),
-  endDate: timestamp('endDate', { mode: 'date' }).notNull(),
-  pauseUploads: boolean('pauseUploads').notNull().default(false),
-  url: text('url').notNull().unique(),
-  pin: text('pin'),
-});
+export const plans = pgTable(
+  'plan',
+  {
+    id: text('id')
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    user: text('user')
+      .notNull()
+      .references(() => users.id),
+    plan: text('plan').notNull(),
+    eventName: text('eventName').notNull(),
+    pricePaid: integer('pricePaid').notNull(),
+    endDate: timestamp('endDate', { mode: 'date' }).notNull(),
+    pauseUploads: boolean('pauseUploads').notNull().default(false),
+    url: text('url').notNull().unique(),
+    pin: text('pin'),
+  },
+  (plan) => ({
+    unq: unique().on(plan.user, plan.eventName),
+  }),
+);
 
 export const accounts = pgTable(
   'account',

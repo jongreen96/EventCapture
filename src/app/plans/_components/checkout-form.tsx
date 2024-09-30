@@ -3,6 +3,7 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import type { Plans } from '@/db/schema';
 import {
   Elements,
   PaymentElement,
@@ -17,8 +18,10 @@ const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY!);
 
 export default function CheckoutForm({
   clientSecret,
+  plans,
 }: {
   clientSecret: string;
+  plans: Plans[];
 }) {
   return (
     <Elements
@@ -35,12 +38,12 @@ export default function CheckoutForm({
       }}
       stripe={stripePromise}
     >
-      <Form />
+      <Form plans={plans} />
     </Elements>
   );
 }
 
-function Form() {
+function Form({ plans }: { plans: Plans[] }) {
   const stripe = useStripe();
   const elements = useElements();
   const [isLoading, setIsLoading] = useState(false);
@@ -50,6 +53,12 @@ function Form() {
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
+
+    // Check if event name already exists
+    if (plans.some((plan) => plan.eventName === eventName)) {
+      setErrorMessage('Event name already exists');
+      return;
+    }
 
     if (!stripe || !elements) return;
     setIsLoading(true);
