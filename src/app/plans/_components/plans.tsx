@@ -38,12 +38,12 @@ export const plansData = {
 
 export default function Plans({
   reference,
-  userId,
-  plans,
+  userId = '',
+  plans = [],
 }: {
   reference: boolean;
-  userId: string;
-  plans: Plans[];
+  userId?: string;
+  plans?: Plans[];
 }) {
   return (
     <section className='container flex flex-col items-center p-4 text-center'>
