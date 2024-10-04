@@ -16,18 +16,28 @@ export default function ShareUploadLinkDialog({ plan }: { plan: Plan }) {
       <h3 className='text-2xl font-bold'>Share Upload Link</h3>
 
       <div className='flex w-full justify-center'>
-        <QR value={plan.url} size={256} marginSize={1} className='rounded-lg' />
+        <QR
+          value={process.env.NEXT_PUBLIC_BASE_URL + 'upload/' + plan.url}
+          size={256}
+          marginSize={1}
+          className='rounded-lg'
+        />
       </div>
 
       <Pin plan={plan} />
 
       <p>Copy and share to guests</p>
       <div className='flex items-center gap-2'>
-        <Input value={plan.url} readOnly />
+        <Input
+          value={process.env.NEXT_PUBLIC_BASE_URL + 'upload/' + plan.url}
+          readOnly
+        />
         <Button
           disabled={copied}
           onClick={() => {
-            navigator.clipboard.writeText(plan.url);
+            navigator.clipboard.writeText(
+              process.env.NEXT_PUBLIC_BASE_URL + 'upload/' + plan.url,
+            );
             setCopied(true);
           }}
           className='w-24'

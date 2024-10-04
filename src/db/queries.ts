@@ -2,7 +2,7 @@ import { plansData } from '@/app/plans/_components/plans';
 import { and, eq, gt } from 'drizzle-orm';
 import { nanoid } from 'nanoid';
 import { db } from './db';
-import { Plan, plans } from './schema';
+import { images, Plan, plans } from './schema';
 
 // PLANS QUERIES
 
@@ -24,6 +24,27 @@ export async function getUserPlan(userId: string, eventName: string) {
   });
 
   return plan;
+}
+
+export async function getPlanPreview(link: string) {
+  const plan = await db.query.plans.findFirst({
+    columns: {
+      id: true,
+      eventName: true,
+      pin: true,
+    },
+    where: eq(plans.url, link),
+  });
+
+  if (!plan) return null;
+
+  const planPreview = {
+    id: plan.id,
+    eventName: plan.eventName,
+    pin: plan.pin ? true : false,
+  };
+
+  return planPreview;
 }
 
 export async function getUserPlans(userId: string) {
@@ -52,7 +73,7 @@ export async function addUserPlan({
     today.setMonth(today.getMonth() + plansData[plan].duration),
   );
 
-  const url = `${process.env.NEXT_PUBLIC_BASE_URL}upload/${nanoid(10)}`;
+  const url = nanoid(10);
 
   await db.insert(plans).values({
     user,
@@ -101,10 +122,33 @@ export async function rollUploadLink({
   plan: Plan;
   userId: string;
 }) {
-  const url = `${process.env.NEXT_PUBLIC_BASE_URL}upload/${nanoid(10)}`;
+  const url = nanoid(10);
 
   await db
     .update(plans)
     .set({ url })
     .where(and(eq(plans.user, userId), eq(plans.eventName, plan.eventName)));
+}
+
+export async function isAuthorized(pin: string, planId: string) {
+  const authorized = await db
+    .select()
+    .from(plans)
+    .where(and(eq(plans.pin, pin), eq(plans.id, planId)));
+
+  return authorized.length > 0;
+}
+
+export async function addImageToPlan(
+  planId: string,
+  guest: string,
+  url: string,
+) {
+  if (!planId) return;
+
+  await db.insert(images).values({
+    plan_id: planId,
+    guest,
+    url: `https://${process.env.CLOUDFLARE_ACCOUNT_ID!}.r2.cloudflarestorage.com/${process.env.CLOUDFLARE_BUCKET_NAME!}/${url}`,
+  });
 }

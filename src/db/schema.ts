@@ -42,6 +42,14 @@ export const plans = pgTable(
   }),
 );
 
+export const images = pgTable('image', {
+  plan_id: text('plan_id').references(() => plans.id, {
+    onDelete: 'cascade',
+  }),
+  guest: text('guest').notNull(),
+  url: text('url').notNull(),
+});
+
 export const accounts = pgTable(
   'account',
   {

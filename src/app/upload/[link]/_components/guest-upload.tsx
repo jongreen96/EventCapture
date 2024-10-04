@@ -1,0 +1,192 @@
+'use client';
+
+import { Button } from '@/components/ui/button';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp';
+import { Label } from '@/components/ui/label';
+import { Progress } from '@/components/ui/progress';
+import { cn } from '@/lib/utils';
+import { OTPInput } from 'input-otp';
+import { Loader2Icon } from 'lucide-react';
+import { nanoid } from 'nanoid';
+import { useState } from 'react';
+
+export default function GuestUpload({
+  planPreview,
+  link,
+}: {
+  planPreview: { id: string; eventName: string; pin: boolean };
+  link: string;
+}) {
+  const planId = planPreview.id;
+  const [files, setFiles] = useState<FileList | null>(null);
+  const [guest, setGuest] = useState<string>('');
+  const [pin, setPin] = useState<string>('');
+  const [isUploading, setIsUploading] = useState(false);
+  const [completed, setCompleted] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    if (!files) return;
+
+    setErrorMessage(null);
+    setUploadProgress(0);
+
+    const authorized = await fetch('/api/authorized', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ pin, planId }),
+    });
+
+    if (!authorized.ok) {
+      setErrorMessage('Invalid pin');
+      return;
+    }
+
+    setIsUploading(true);
+
+    const fileMetadata = Array.from(files).map((file) => ({
+      name: planId + '/' + nanoid(5) + '-' + file.name,
+      type: file.type,
+    }));
+
+    const res = await fetch('/api/r2-presigned-url', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        files: fileMetadata,
+      }),
+    });
+
+    const presignedUrls = await res.json();
+
+    await Promise.all(
+      Array.from(files).map(async (file, index) => {
+        const { url, key } = presignedUrls[index];
+
+        await fetch(url, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': file.type,
+          },
+          body: file,
+        });
+
+        await fetch('/api/add-image', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ planId, guest, url: key }),
+        });
+
+        setUploadProgress(index + 1);
+      }),
+    );
+
+    setCompleted(true);
+    setIsUploading(false);
+    setUploadProgress(0);
+  };
+
+  return (
+    <Card className='min-w-80 text-center'>
+      <CardHeader>
+        <CardTitle>{planPreview.eventName}</CardTitle>
+        <CardDescription>Upload your photos here</CardDescription>
+      </CardHeader>
+
+      <CardContent>
+        <form
+          onSubmit={(e) => handleSubmit(e)}
+          className='flex flex-col items-center gap-4'
+        >
+          <Input
+            type='file'
+            name='files'
+            accept='image/*, video/*'
+            multiple
+            className='rounded-lg border border-dashed'
+            required
+            onChange={(e) => setFiles(e.target.files)}
+          />
+
+          {planPreview.pin && (
+            <div className='flex w-full items-center justify-between'>
+              <Label htmlFor='pin'>Pin:</Label>
+              <OTPInput
+                maxLength={4}
+                name='pin'
+                value={pin}
+                onChange={setPin}
+                required
+                id='pin'
+              >
+                <InputOTPGroup>
+                  <InputOTPSlot index={0} />
+                  <InputOTPSlot index={1} />
+                  <InputOTPSlot index={2} />
+                  <InputOTPSlot index={3} />
+                </InputOTPGroup>
+              </OTPInput>
+            </div>
+          )}
+
+          <div className='flex w-full items-center justify-between'>
+            <Label htmlFor='name'>Name:</Label>
+            <Input
+              type='text'
+              placeholder='John Doe'
+              id='name'
+              name='name'
+              className='w-40 text-ellipsis'
+              required
+              value={guest}
+              onChange={(e) => setGuest(e.target.value)}
+            />
+          </div>
+
+          {isUploading && (
+            <Progress
+              className='w-full'
+              value={uploadProgress}
+              max={files?.length}
+            />
+          )}
+
+          <Button
+            className={cn('w-full', completed && 'disabled:opacity-100')}
+            type='submit'
+            disabled={isUploading || completed}
+          >
+            {completed ? (
+              'Completed'
+            ) : isUploading ? (
+              <p className='flex items-center gap-2'>
+                <Loader2Icon className='h-4 w-4 animate-spin' />
+                Uploading...
+              </p>
+            ) : (
+              'Upload'
+            )}
+          </Button>
+        </form>
+
+        {errorMessage && <p className='text-red-500'>{errorMessage}</p>}
+      </CardContent>
+    </Card>
+  );
+}
