@@ -110,8 +110,8 @@ export default function Overview({ plan }: { plan: Plan }) {
                     src={image.url}
                     alt={image.guest}
                     className='h-full w-full rounded-md object-cover'
-                    layout='fill'
-                    sizes='80'
+                    fill
+                    sizes='80px'
                   />
                 </div>
               ))}
