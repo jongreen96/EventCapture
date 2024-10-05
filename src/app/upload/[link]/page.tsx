@@ -1,6 +1,6 @@
 import { getPlanPreview } from '@/db/queries';
 import { redirect } from 'next/navigation';
-import GuestUpload from './_components/guest-upload';
+import GuestUpload from './_components/guest-upload-form';
 
 export default async function UploadPage({
   params,

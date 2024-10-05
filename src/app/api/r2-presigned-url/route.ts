@@ -1,3 +1,4 @@
+import { isAuthorized } from '@/db/queries';
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { NextRequest, NextResponse } from 'next/server';
@@ -13,8 +14,12 @@ const client = new S3Client({
 
 export async function POST(req: NextRequest) {
   try {
-    const { files } = await req.json();
-    if (!files) return new Response('Missing files', { status: 400 });
+    const { files, pin, planId } = await req.json();
+    if (!pin || !planId || !files)
+      return new Response('Missing pin, planId or files', { status: 400 });
+
+    const authorized = await isAuthorized(pin, planId);
+    if (!authorized) return new Response('Invalid pin', { status: 401 });
 
     const presignedUrls = await Promise.all(
       files.map(async (file: any) => {

@@ -17,6 +17,8 @@ import { OTPInput } from 'input-otp';
 import { Loader2Icon } from 'lucide-react';
 import { nanoid } from 'nanoid';
 import { useState } from 'react';
+import ImageInput from './image-input';
+import ImageList from './image-list';
 
 export default function GuestUpload({
   planPreview,
@@ -36,24 +38,18 @@ export default function GuestUpload({
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    if (!files) return;
-
-    setErrorMessage(null);
-    setUploadProgress(0);
-
-    const authorized = await fetch('/api/authorized', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ pin, planId }),
-    });
-
-    if (!authorized.ok) {
-      setErrorMessage('Invalid pin');
+    if (!files) {
+      setErrorMessage('Please select files to upload');
+      return;
+    } else if (!guest) {
+      setErrorMessage('Please enter your name');
+      return;
+    } else if (planPreview.pin && !pin) {
+      setErrorMessage('Please enter the pin');
       return;
     }
 
+    setErrorMessage(null);
     setIsUploading(true);
 
     const fileMetadata = Array.from(files).map((file) => ({
@@ -63,43 +59,43 @@ export default function GuestUpload({
 
     const res = await fetch('/api/r2-presigned-url', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
       body: JSON.stringify({
         files: fileMetadata,
+        pin,
+        planId,
       }),
     });
 
+    if (res.status === 401) {
+      setErrorMessage('Incorrect Pin');
+      setIsUploading(false);
+      return;
+    }
+
     const presignedUrls = await res.json();
 
+    let completedUploads = 0;
     await Promise.all(
       Array.from(files).map(async (file, index) => {
         const { url, key } = presignedUrls[index];
 
         await fetch(url, {
           method: 'PUT',
-          headers: {
-            'Content-Type': file.type,
-          },
           body: file,
         });
 
         await fetch('/api/add-image', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
           body: JSON.stringify({ planId, guest, url: key }),
         });
 
-        setUploadProgress(index + 1);
+        completedUploads += 1;
+        setUploadProgress((completedUploads / files.length) * 100);
       }),
     );
 
     setCompleted(true);
     setIsUploading(false);
-    setUploadProgress(0);
   };
 
   return (
@@ -114,15 +110,9 @@ export default function GuestUpload({
           onSubmit={(e) => handleSubmit(e)}
           className='flex flex-col items-center gap-4'
         >
-          <Input
-            type='file'
-            name='files'
-            accept='image/*, video/*'
-            multiple
-            className='rounded-lg border border-dashed'
-            required
-            onChange={(e) => setFiles(e.target.files)}
-          />
+          <ImageInput files={files} setFiles={setFiles} />
+
+          <ImageList files={files} />
 
           {planPreview.pin && (
             <div className='flex w-full items-center justify-between'>
@@ -132,7 +122,6 @@ export default function GuestUpload({
                 name='pin'
                 value={pin}
                 onChange={setPin}
-                required
                 id='pin'
               >
                 <InputOTPGroup>
@@ -153,18 +142,13 @@ export default function GuestUpload({
               id='name'
               name='name'
               className='w-40 text-ellipsis'
-              required
               value={guest}
               onChange={(e) => setGuest(e.target.value)}
             />
           </div>
 
           {isUploading && (
-            <Progress
-              className='w-full'
-              value={uploadProgress}
-              max={files?.length}
-            />
+            <Progress className='w-full' value={uploadProgress} max={100} />
           )}
 
           <Button
@@ -185,7 +169,7 @@ export default function GuestUpload({
           </Button>
         </form>
 
-        {errorMessage && <p className='text-red-500'>{errorMessage}</p>}
+        {errorMessage && <p className='mt-4 text-red-500'>{errorMessage}</p>}
       </CardContent>
     </Card>
   );
