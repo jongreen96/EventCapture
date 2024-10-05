@@ -1,4 +1,4 @@
-import { InferSelectModel } from 'drizzle-orm';
+import { InferSelectModel, relations } from 'drizzle-orm';
 import {
   boolean,
   integer,
@@ -96,12 +96,33 @@ export const verificationTokens = pgTable(
   }),
 );
 
+// Relations
+export const plansRelations = relations(plans, ({ many }) => ({
+  images: many(images),
+}));
+
+export const imagesRelations = relations(images, ({ one }) => ({
+  plan: one(plans, {
+    fields: [images.plan_id],
+    references: [plans.id],
+  }),
+}));
+
 // Types
 export type User = InferSelectModel<typeof users>;
-export type Plan = Omit<
-  InferSelectModel<typeof plans>,
-  'id' | 'user' | 'pricePaid'
->;
+// export type Plan = Omit<
+//   InferSelectModel<typeof plans>,
+//   'id' | 'user' | 'pricePaid'
+// >;
+export type Plan = {
+  plan: string;
+  eventName: string;
+  endDate: Date;
+  pauseUploads: boolean;
+  url: string;
+  pin: string | null;
+  images: { guest: string; url: string }[];
+};
 export type Plans = Pick<
   InferSelectModel<typeof plans>,
   'eventName' | 'endDate'

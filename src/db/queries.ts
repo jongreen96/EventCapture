@@ -16,6 +16,14 @@ export async function getUserPlan(userId: string, eventName: string) {
       url: true,
       pin: true,
     },
+    with: {
+      images: {
+        columns: {
+          guest: true,
+          url: true,
+        },
+      },
+    },
     where: and(
       eq(plans.user, userId),
       eq(plans.eventName, eventName),

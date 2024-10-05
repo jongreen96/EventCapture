@@ -1,6 +1,5 @@
 'use client';
 
-import tempimage from '@/assets/userImagePlaceholder.jpg';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
@@ -14,7 +13,6 @@ import {
 import { Plan } from '@/db/schema';
 import { cn } from '@/lib/utils';
 import { BarChart3, Calendar, ImageIcon, User } from 'lucide-react';
-import Image from 'next/image';
 
 export default function Overview({ plan }: { plan: Plan }) {
   const hoursRemaining = Math.floor(
@@ -32,7 +30,7 @@ export default function Overview({ plan }: { plan: Plan }) {
             </CardTitle>
           </CardHeader>
           <CardContent className='text-5xl font-semibold tracking-tight'>
-            218
+            {plan.images.length}
           </CardContent>
         </Card>
 
@@ -43,7 +41,12 @@ export default function Overview({ plan }: { plan: Plan }) {
             </CardTitle>
           </CardHeader>
           <CardContent className='text-5xl font-semibold tracking-tight'>
-            69
+            {
+              plan.images.reduce((acc, image) => {
+                acc.add(image.guest);
+                return acc;
+              }, new Set<string>()).size
+            }
           </CardContent>
         </Card>
 
@@ -55,7 +58,7 @@ export default function Overview({ plan }: { plan: Plan }) {
             </CardTitle>
           </CardHeader>
           <CardContent className='text-5xl font-semibold tracking-tight'>
-            18
+            TBC
             <span className='ml-2 text-sm font-normal'>GB</span>
             <span className='ml-2 text-sm font-normal'>/ 100 GB</span>
           </CardContent>
@@ -90,22 +93,17 @@ export default function Overview({ plan }: { plan: Plan }) {
             </CardTitle>
           </CardHeader>
           <CardContent className='flex flex-wrap gap-2'>
-            <Image src={tempimage} alt='Photos' width={100} height={100} />
-            <Image src={tempimage} alt='Photos' width={100} height={100} />
-            <Image src={tempimage} alt='Photos' width={100} height={100} />
-            <Image src={tempimage} alt='Photos' width={100} height={100} />
-            <Image src={tempimage} alt='Photos' width={100} height={100} />
-            <Image src={tempimage} alt='Photos' width={100} height={100} />
-            <Image src={tempimage} alt='Photos' width={100} height={100} />
-            <Image src={tempimage} alt='Photos' width={100} height={100} />
-            <Image src={tempimage} alt='Photos' width={100} height={100} />
-            <Image src={tempimage} alt='Photos' width={100} height={100} />
-            <Image src={tempimage} alt='Photos' width={100} height={100} />
-            <Image src={tempimage} alt='Photos' width={100} height={100} />
-            <Image src={tempimage} alt='Photos' width={100} height={100} />
-            <Image src={tempimage} alt='Photos' width={100} height={100} />
-            <Image src={tempimage} alt='Photos' width={100} height={100} />
-            <Image src={tempimage} alt='Photos' width={100} height={100} />
+            {plan.images.length === 0 && (
+              <div className='flex h-20 w-full items-center justify-center'>
+                No photos uploaded yet
+              </div>
+            )}
+            {plan.images.map((image, index) => (
+              <div key={index} className='relative h-20 w-20'>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={image.url} alt={image.guest} className='rounded-md' />
+              </div>
+            ))}
           </CardContent>
         </Card>
 
@@ -126,38 +124,22 @@ export default function Overview({ plan }: { plan: Plan }) {
               </TableHeader>
 
               <TableBody>
-                <TableRow>
-                  <TableCell>John Doe</TableCell>
-                  <TableCell>83</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell>John Doe</TableCell>
-                  <TableCell>43</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell>John Doe</TableCell>
-                  <TableCell>38</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell>John Doe</TableCell>
-                  <TableCell>20</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell>John Doe</TableCell>
-                  <TableCell>16</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell>John Doe</TableCell>
-                  <TableCell>15</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell>John Doe</TableCell>
-                  <TableCell>7</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell>John Doe</TableCell>
-                  <TableCell>1</TableCell>
-                </TableRow>
+                {plan.images.length === 0 && (
+                  <TableRow>
+                    <TableCell colSpan={2}>No photos uploaded yet</TableCell>
+                  </TableRow>
+                )}
+                {Array.from(
+                  plan.images.reduce((acc, image) => {
+                    acc.set(image.guest, (acc.get(image.guest) || 0) + 1);
+                    return acc;
+                  }, new Map<string, number>()),
+                ).map(([guest, count]) => (
+                  <TableRow key={guest}>
+                    <TableCell>{guest}</TableCell>
+                    <TableCell>{count}</TableCell>
+                  </TableRow>
+                ))}
               </TableBody>
             </Table>
           </CardContent>
