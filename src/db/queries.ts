@@ -157,6 +157,6 @@ export async function addImageToPlan(
   await db.insert(images).values({
     plan_id: planId,
     guest,
-    url: `https://${process.env.CLOUDFLARE_ACCOUNT_ID!}.r2.cloudflarestorage.com/${process.env.CLOUDFLARE_BUCKET_NAME!}/${url}`,
+    url: `https://images.event-capture.jongreen.dev/${url}`,
   });
 }

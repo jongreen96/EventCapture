@@ -6,7 +6,7 @@ const nextConfig = {
         hostname: 'lh3.googleusercontent.com',
       },
       {
-        hostname: '275f3b7d5dc1ccc88cb37def555b11ac.r2.cloudflarestorage.com',
+        hostname: 'images.event-capture.jongreen.dev',
       },
     ],
   },
