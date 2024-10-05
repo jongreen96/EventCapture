@@ -13,6 +13,7 @@ import {
 import { Plan } from '@/db/schema';
 import { cn } from '@/lib/utils';
 import { BarChart3, Calendar, ImageIcon, User } from 'lucide-react';
+import Image from 'next/image';
 
 export default function Overview({ plan }: { plan: Plan }) {
   const hoursRemaining = Math.floor(
@@ -92,18 +93,29 @@ export default function Overview({ plan }: { plan: Plan }) {
               <Button variant='outline'>View All</Button>
             </CardTitle>
           </CardHeader>
-          <CardContent className='flex flex-wrap gap-2'>
+          <CardContent>
             {plan.images.length === 0 && (
               <div className='flex h-20 w-full items-center justify-center'>
                 No photos uploaded yet
               </div>
             )}
-            {plan.images.map((image, index) => (
-              <div key={index} className='relative h-20 w-20'>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={image.url} alt={image.guest} className='rounded-md' />
-              </div>
-            ))}
+            <div className='grid grid-cols-[repeat(auto-fill,minmax(80px,1fr))] gap-2'>
+              {plan.images.map((image, index) => (
+                <div
+                  key={index}
+                  className='relative w-full'
+                  style={{ paddingTop: '100%' }}
+                >
+                  <Image
+                    src={image.url}
+                    alt={image.guest}
+                    className='h-full w-full rounded-md object-cover'
+                    layout='fill'
+                    sizes='80'
+                  />
+                </div>
+              ))}
+            </div>
           </CardContent>
         </Card>
 
