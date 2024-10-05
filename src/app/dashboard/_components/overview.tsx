@@ -3,6 +3,13 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
+import {
   Table,
   TableBody,
   TableCell,
@@ -14,6 +21,7 @@ import { Plan } from '@/db/schema';
 import { cn } from '@/lib/utils';
 import { BarChart3, Calendar, ImageIcon, User } from 'lucide-react';
 import Image from 'next/image';
+import ImagePreview from './image-preview';
 
 export default function Overview({ plan }: { plan: Plan }) {
   const hoursRemaining = Math.floor(
@@ -106,13 +114,28 @@ export default function Overview({ plan }: { plan: Plan }) {
                   className='relative w-full'
                   style={{ paddingTop: '100%' }}
                 >
-                  <Image
-                    src={image.url}
-                    alt={image.guest}
-                    className='h-full w-full rounded-md object-cover'
-                    fill
-                    sizes='80px'
-                  />
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <Image
+                        src={image.url}
+                        alt={image.guest}
+                        className='h-full w-full rounded-md object-cover'
+                        fill
+                        sizes='80px'
+                      />
+                    </DialogTrigger>
+                    <DialogContent
+                      className='flex h-5/6 w-5/6 max-w-full items-center justify-center overflow-hidden'
+                      aria-describedby='user uploaded image'
+                    >
+                      <DialogHeader className='absolute bottom-5 right-5 z-10'>
+                        <DialogTitle className='rounded-lg bg-black p-1 font-normal'>
+                          Uploaded by {image.guest}
+                        </DialogTitle>
+                      </DialogHeader>
+                      <ImagePreview url={image.url} guest={image.guest} />
+                    </DialogContent>
+                  </Dialog>
                 </div>
               ))}
             </div>
