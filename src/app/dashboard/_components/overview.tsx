@@ -169,12 +169,14 @@ export default function Overview({ plan }: { plan: Plan }) {
                     acc.set(image.guest, (acc.get(image.guest) || 0) + 1);
                     return acc;
                   }, new Map<string, number>()),
-                ).map(([guest, count]) => (
-                  <TableRow key={guest}>
-                    <TableCell>{guest}</TableCell>
-                    <TableCell>{count}</TableCell>
-                  </TableRow>
-                ))}
+                )
+                  .sort((a, b) => b[1] - a[1])
+                  .map(([guest, count]) => (
+                    <TableRow key={guest}>
+                      <TableCell>{guest}</TableCell>
+                      <TableCell>{count}</TableCell>
+                    </TableRow>
+                  ))}
               </TableBody>
             </Table>
           </CardContent>
