@@ -36,7 +36,7 @@ export default function ImagePreview({
         <Image
           src={image.url}
           alt={image.guest}
-          className='h-full w-full rounded-md object-cover'
+          className='h-full w-full cursor-pointer rounded-md object-cover'
           fill
           sizes='80px'
         />
