@@ -2,7 +2,11 @@
 
 import { setPinAction } from '@/app/actions';
 import { Button } from '@/components/ui/button';
-import { DialogClose } from '@/components/ui/dialog';
+import {
+  DialogClose,
+  DialogDescription,
+  DialogTitle,
+} from '@/components/ui/dialog';
 import {
   InputOTP,
   InputOTPGroup,
@@ -13,7 +17,10 @@ import type { Plan } from '@/db/schema';
 export default function SetPin({ plan }: { plan: Plan }) {
   return (
     <div className='flex flex-col items-center'>
-      <h3 className='text-2xl font-bold'>Set Pin</h3>
+      <DialogTitle className='text-2xl font-bold'>Set Pin</DialogTitle>
+      <DialogDescription className='text-center'>
+        Set a 4-digit pin to secure the event.
+      </DialogDescription>
 
       <form
         action={setPinAction}
