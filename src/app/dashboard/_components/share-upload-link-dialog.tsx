@@ -1,6 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
+import { DialogDescription, DialogTitle } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import type { Plan } from '@/db/schema';
 import { CheckCircle } from 'lucide-react';
@@ -12,8 +13,14 @@ export default function ShareUploadLinkDialog({ plan }: { plan: Plan }) {
   const [copied, setCopied] = useState(false);
 
   return (
-    <>
-      <h3 className='text-2xl font-bold'>Share Upload Link</h3>
+    <div className='flex flex-col gap-2 text-center'>
+      <DialogTitle className='text-center text-2xl font-bold'>
+        Share Upload Link
+      </DialogTitle>
+      <DialogDescription className=''>
+        Share this link with your guests to upload photos and videos to this
+        event.
+      </DialogDescription>
 
       <div className='flex w-full justify-center'>
         <QR
@@ -45,6 +52,6 @@ export default function ShareUploadLinkDialog({ plan }: { plan: Plan }) {
           {copied ? <CheckCircle className='h-4 w-4' /> : 'Copy Link'}
         </Button>
       </div>
-    </>
+    </div>
   );
 }
