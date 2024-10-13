@@ -24,7 +24,12 @@ export default function GuestUpload({
   planPreview,
   link,
 }: {
-  planPreview: { id: string; eventName: string; pin: boolean };
+  planPreview: {
+    id: string;
+    eventName: string;
+    pin: boolean;
+    pauseUploads: boolean;
+  };
   link: string;
 }) {
   const planId = planPreview.id;
@@ -47,6 +52,9 @@ export default function GuestUpload({
     } else if (planPreview.pin && !pin) {
       setErrorMessage('Please enter the pin');
       return;
+    } else if (planPreview.pauseUploads) {
+      setErrorMessage('Uploads are paused');
+      return;
     }
 
     setErrorMessage(null);
@@ -68,6 +76,10 @@ export default function GuestUpload({
 
     if (res.status === 401) {
       setErrorMessage('Incorrect Pin');
+      setIsUploading(false);
+      return;
+    } else if (res.status === 403) {
+      setErrorMessage('Uploads are paused');
       setIsUploading(false);
       return;
     }
@@ -159,7 +171,7 @@ export default function GuestUpload({
           <Button
             className={cn('w-full', completed && 'disabled:opacity-100')}
             type='submit'
-            disabled={isUploading || completed}
+            disabled={isUploading || completed || planPreview.pauseUploads}
           >
             {completed ? (
               'Completed'

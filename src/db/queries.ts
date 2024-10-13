@@ -41,6 +41,7 @@ export async function getPlanPreview(link: string) {
       id: true,
       eventName: true,
       pin: true,
+      pauseUploads: true,
     },
     where: eq(plans.url, link),
   });
@@ -51,6 +52,7 @@ export async function getPlanPreview(link: string) {
     id: plan.id,
     eventName: plan.eventName,
     pin: plan.pin ? true : false,
+    pauseUploads: plan.pauseUploads,
   };
 
   return planPreview;
@@ -147,6 +149,17 @@ export async function isAuthorized(pin: string, planId: string) {
     .where(and(eq(plans.pin, pin), eq(plans.id, planId)));
 
   return authorized.length > 0;
+}
+
+export async function isPaused(planId: string) {
+  const plan = await db.query.plans.findFirst({
+    columns: {
+      pauseUploads: true,
+    },
+    where: eq(plans.id, planId),
+  });
+
+  return plan?.pauseUploads;
 }
 
 export async function addImageToPlan(

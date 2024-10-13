@@ -1,4 +1,4 @@
-import { isAuthorized } from '@/db/queries';
+import { isAuthorized, isPaused } from '@/db/queries';
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { NextRequest, NextResponse } from 'next/server';
@@ -17,6 +17,9 @@ export async function POST(req: NextRequest) {
     const { files, pin, planId } = await req.json();
     if (!pin || !planId || !files)
       return new Response('Missing pin, planId or files', { status: 400 });
+
+    const paused = await isPaused(planId);
+    if (paused) return new Response('Uploads are paused', { status: 403 });
 
     const authorized = await isAuthorized(pin, planId);
     if (!authorized) return new Response('Invalid pin', { status: 401 });
