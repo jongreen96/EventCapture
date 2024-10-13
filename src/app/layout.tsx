@@ -1,4 +1,5 @@
 import Nav from '@/components/nav';
+import { ThemeProvider } from '@/components/theme-provider';
 import { cn } from '@/lib/utils';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
@@ -21,12 +22,19 @@ export default function RootLayout({
     <html lang='en' className='scroll-smooth'>
       <body
         className={cn(
-          'xdark min-h-screen min-w-[400px] bg-background font-sans antialiased',
+          'min-h-screen min-w-[400px] bg-background font-sans antialiased',
           inter.className,
         )}
       >
-        <Nav />
-        {children}
+        <ThemeProvider
+          attribute='class'
+          defaultTheme='system'
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Nav />
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

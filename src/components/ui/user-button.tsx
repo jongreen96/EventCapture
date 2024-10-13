@@ -1,9 +1,11 @@
+'use client';
+
 import { signOutAction } from '@/app/actions';
 import userImagePlaceholder from '@/assets/userImagePlaceholder.jpg';
-import { LogOut, Settings } from 'lucide-react';
+import { LogOut, Monitor, Moon, Sun } from 'lucide-react';
 import { User } from 'next-auth';
+import { useTheme } from 'next-themes';
 import Image from 'next/image';
-import Link from 'next/link';
 import { Button } from './button';
 import {
   DropdownMenu,
@@ -19,6 +21,8 @@ interface UserProp {
 }
 
 export default function UserButton({ user }: UserProp) {
+  const { setTheme } = useTheme();
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -36,12 +40,22 @@ export default function UserButton({ user }: UserProp) {
         <DropdownMenuLabel>{user.name || 'User'}</DropdownMenuLabel>
         <DropdownMenuSeparator />
 
-        <DropdownMenuItem asChild>
-          <Link href='/settings'>
-            <Settings className='mr-2 size-4' />
-            <span>Settings</span>
-          </Link>
-        </DropdownMenuItem>
+        <div className='flex justify-between'>
+          <DropdownMenuLabel>Theme:</DropdownMenuLabel>
+          <div className='flex'>
+            <DropdownMenuItem onClick={() => setTheme('system')}>
+              <Monitor className='size-4' />
+            </DropdownMenuItem>
+
+            <DropdownMenuItem onClick={() => setTheme('dark')}>
+              <Moon className='size-4' />
+            </DropdownMenuItem>
+
+            <DropdownMenuItem onClick={() => setTheme('light')}>
+              <Sun className='size-4' />
+            </DropdownMenuItem>
+          </div>
+        </div>
         <DropdownMenuSeparator />
 
         <form action={signOutAction}>
