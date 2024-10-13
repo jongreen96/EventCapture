@@ -40,10 +40,8 @@ export async function buyPlanAction(formData: FormData) {
   });
 
   const parsedData = buyPlanSchema.safeParse(data);
-  if (!parsedData.success) {
-    console.log(parsedData.error);
-    return;
-  }
+  if (!parsedData.success) return;
+
   const userData = parsedData.data;
 
   // await addUserPlan(userData);
@@ -76,10 +74,7 @@ export async function setPinAction(formData: FormData) {
   });
 
   const parsedData = setPinSchema.safeParse(data);
-  if (!parsedData.success) {
-    console.log(parsedData.error);
-    return;
-  }
+  if (!parsedData.success) return;
 
   await setPin({
     pin: parsedData.data.pin,
@@ -115,10 +110,7 @@ export async function deleteImageAction(formData: FormData) {
 
   const parsedData = deleteImageSchema.safeParse(data);
 
-  if (!parsedData.success) {
-    console.log(parsedData.error);
-    return;
-  }
+  if (!parsedData.success) return;
 
   const deleted = await deleteImage(parsedData.data.url, session.user.id);
   if (!deleted) {
@@ -126,15 +118,12 @@ export async function deleteImageAction(formData: FormData) {
     return;
   }
 
-  console.log(parsedData.data.key);
-
   const deleteParams = {
     Bucket: process.env.CLOUDFLARE_BUCKET_NAME!,
     Key: parsedData.data.key,
   };
 
   const result = await client.send(new DeleteObjectCommand(deleteParams));
-  console.log(result);
 
   revalidatePath('/dashboard');
 }
