@@ -86,7 +86,12 @@ export default function GuestUpload({
 
         await fetch('/api/add-image', {
           method: 'POST',
-          body: JSON.stringify({ planId, guest, url: key }),
+          body: JSON.stringify({
+            planId,
+            guest,
+            url: key,
+            key: fileMetadata[index].name,
+          }),
         });
 
         completedUploads += 1;

@@ -21,6 +21,7 @@ export async function getUserPlan(userId: string, eventName: string) {
         columns: {
           guest: true,
           url: true,
+          key: true,
         },
       },
     },
@@ -58,6 +59,7 @@ export async function getPlanPreview(link: string) {
 export async function getUserPlans(userId: string) {
   const userPlans = await db.query.plans.findMany({
     columns: {
+      id: true,
       eventName: true,
       endDate: true,
     },
@@ -151,6 +153,7 @@ export async function addImageToPlan(
   planId: string,
   guest: string,
   url: string,
+  key: string,
 ) {
   if (!planId) return;
 
@@ -158,5 +161,30 @@ export async function addImageToPlan(
     plan_id: planId,
     guest,
     url: `https://images.event-capture.jongreen.dev/${url}`,
+    key,
   });
+}
+
+export async function deleteImage(url: string, userId: string) {
+  const userPlans = await db.query.plans.findMany({
+    columns: {
+      id: true,
+    },
+    where: eq(plans.user, userId),
+  });
+
+  if (!userPlans || userPlans.length === 0) return;
+
+  let deleted = false;
+
+  for (const plan of userPlans) {
+    await db
+      .delete(images)
+      .where(and(eq(images.url, url), eq(images.plan_id, plan.id)))
+      .then(() => {
+        deleted = true;
+      });
+  }
+
+  return deleted;
 }
