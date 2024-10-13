@@ -19,6 +19,7 @@ export default async function PhotosPage({
     decodeURIComponent(params.event),
   );
   if (!plan) redirect('/plans');
+  if (plan.images.length === 0) redirect(`/dashboard/${params.event}/overview`);
 
   return (
     <>
