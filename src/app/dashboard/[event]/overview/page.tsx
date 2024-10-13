@@ -118,7 +118,7 @@ export default async function OverviewPage({
               </div>
             )}
             <div className='grid grid-cols-[repeat(auto-fill,minmax(80px,1fr))] gap-2'>
-              {plan.images.map((image, index) => (
+              {plan.images.slice(0, 26).map((image, index) => (
                 <div
                   key={index}
                   className='relative w-full'
@@ -127,6 +127,19 @@ export default async function OverviewPage({
                   <ImagePreview image={image} />
                 </div>
               ))}
+
+              {plan.images.length > 26 && (
+                <Link href={`/dashboard/${params.event}/photos`}>
+                  <div
+                    className='relative w-full'
+                    style={{ paddingTop: '100%' }}
+                  >
+                    <div className='absolute inset-0 flex items-center justify-center bg-white bg-opacity-75 text-center text-gray-500'>
+                      +{plan.images.length - 26} more
+                    </div>
+                  </div>
+                </Link>
+              )}
             </div>
           </CardContent>
         </Card>
