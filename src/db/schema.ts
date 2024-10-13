@@ -48,6 +48,7 @@ export const images = pgTable('image', {
   }),
   guest: text('guest').notNull(),
   url: text('url').notNull(),
+  key: text('key').notNull(),
 });
 
 export const accounts = pgTable(
@@ -121,9 +122,9 @@ export type Plan = {
   pauseUploads: boolean;
   url: string;
   pin: string | null;
-  images: { guest: string; url: string }[];
+  images: { guest: string; url: string; key: string }[];
 };
 export type Plans = Pick<
   InferSelectModel<typeof plans>,
-  'eventName' | 'endDate'
+  'id' | 'eventName' | 'endDate'
 >;
