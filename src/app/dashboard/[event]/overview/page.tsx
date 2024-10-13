@@ -12,6 +12,7 @@ import { getUserPlan } from '@/db/queries';
 import getSession from '@/lib/getSession';
 import { cn } from '@/lib/utils';
 import { BarChart3, Calendar, ImageIcon, User } from 'lucide-react';
+import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import ImagePreview from '../../_components/image-preview';
 
@@ -36,17 +37,19 @@ export default async function OverviewPage({
   return (
     <div className='space-y-4'>
       <section className='grid grid-cols-2 gap-4 md:grid-cols-4'>
-        <Card className='cursor-pointer'>
-          <CardHeader className='pb-0'>
-            <CardTitle className='flex items-center gap-2 text-base'>
-              <ImageIcon className='size-4 text-muted-foreground' />
-              Photos
-            </CardTitle>
-          </CardHeader>
-          <CardContent className='text-5xl font-semibold tracking-tight'>
-            {plan.images.length}
-          </CardContent>
-        </Card>
+        <Link href={`/dashboard/${params.event}/photos`}>
+          <Card className='cursor-pointer'>
+            <CardHeader className='pb-0'>
+              <CardTitle className='flex items-center gap-2 text-base'>
+                <ImageIcon className='size-4 text-muted-foreground' />
+                Photos
+              </CardTitle>
+            </CardHeader>
+            <CardContent className='text-5xl font-semibold tracking-tight'>
+              {plan.images.length}
+            </CardContent>
+          </Card>
+        </Link>
 
         <Card className='cursor-pointer'>
           <CardHeader className='pb-0'>
@@ -103,7 +106,9 @@ export default async function OverviewPage({
           <CardHeader>
             <CardTitle className='flex items-center justify-between gap-2'>
               Photos
-              <Button variant='outline'>View All</Button>
+              <Button asChild variant='outline'>
+                <Link href={`/dashboard/${params.event}/photos`}>View All</Link>
+              </Button>
             </CardTitle>
           </CardHeader>
           <CardContent>
