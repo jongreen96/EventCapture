@@ -35,13 +35,11 @@ export default function ImagePreview({
               Uploaded by {image.guest}
             </DialogTitle>
             <DialogDescription>
-              <p>
-                on{' '}
-                {new Intl.DateTimeFormat('en-GB', {
-                  timeStyle: 'short',
-                  dateStyle: 'short',
-                }).format(new Date(image.createdAt))}
-              </p>
+              on{' '}
+              {new Intl.DateTimeFormat('en-GB', {
+                timeStyle: 'short',
+                dateStyle: 'short',
+              }).format(new Date(image.createdAt))}
             </DialogDescription>
           </div>
           <div className='flex items-center gap-2'>
