@@ -2,6 +2,7 @@
 
 import { signOutAction } from '@/app/actions';
 import userImagePlaceholder from '@/assets/userImagePlaceholder.jpg';
+import { cn } from '@/lib/utils';
 import { LogOut, Monitor, Moon, Sun } from 'lucide-react';
 import { User } from 'next-auth';
 import { useTheme } from 'next-themes';
@@ -15,6 +16,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from './dropdown-menu';
+import { Separator } from './separator';
 
 interface UserProp {
   user: User;
@@ -42,18 +44,40 @@ export default function UserButton({ user }: UserProp) {
 
         <div className='flex justify-between'>
           <DropdownMenuLabel>Theme:</DropdownMenuLabel>
-          <div className='flex'>
-            <DropdownMenuItem onClick={() => setTheme('system')}>
+          <div className='flex overflow-hidden rounded-lg border'>
+            <div
+              onClick={() => setTheme('system')}
+              className={cn(
+                'rounded-none p-2',
+                globalThis.localStorage.theme === 'system' && 'bg-primary/10',
+              )}
+            >
               <Monitor className='size-4' />
-            </DropdownMenuItem>
+            </div>
 
-            <DropdownMenuItem onClick={() => setTheme('dark')}>
+            <Separator orientation='vertical' />
+
+            <div
+              onClick={() => setTheme('dark')}
+              className={cn(
+                'rounded-none p-2',
+                globalThis.localStorage.theme === 'dark' && 'bg-primary/10',
+              )}
+            >
               <Moon className='size-4' />
-            </DropdownMenuItem>
+            </div>
 
-            <DropdownMenuItem onClick={() => setTheme('light')}>
+            <Separator orientation='vertical' />
+
+            <div
+              onClick={() => setTheme('light')}
+              className={cn(
+                'rounded-none p-2',
+                globalThis.localStorage.theme === 'light' && 'bg-primary/10',
+              )}
+            >
               <Sun className='size-4' />
-            </DropdownMenuItem>
+            </div>
           </div>
         </div>
         <DropdownMenuSeparator />
