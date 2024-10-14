@@ -1,0 +1,1 @@
+ALTER TABLE "image" ALTER COLUMN "createdAt" SET NOT NULL;

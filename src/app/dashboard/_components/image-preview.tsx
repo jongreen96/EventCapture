@@ -15,7 +15,7 @@ import DeleteImageButton from './delete-image-button';
 export default function ImagePreview({
   image,
 }: {
-  image: { url: string; guest: string; key: string };
+  image: { url: string; guest: string; key: string; createdAt: Date };
 }) {
   return (
     <Dialog>
@@ -31,8 +31,18 @@ export default function ImagePreview({
       <DialogContent className='size-fit max-w-[100vw] overflow-hidden p-0'>
         <DialogHeader className='flex-row items-center justify-between p-4'>
           <div>
-            <DialogTitle className='font-normal'>Uploaded by</DialogTitle>
-            <DialogDescription>{image.guest}</DialogDescription>
+            <DialogTitle className='font-normal'>
+              Uploaded by {image.guest}
+            </DialogTitle>
+            <DialogDescription>
+              <p>
+                on{' '}
+                {new Intl.DateTimeFormat('en-GB', {
+                  timeStyle: 'short',
+                  dateStyle: 'short',
+                }).format(new Date(image.createdAt))}
+              </p>
+            </DialogDescription>
           </div>
           <div className='flex items-center gap-2'>
             <DeleteImageButton image={image} />

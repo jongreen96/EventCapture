@@ -49,7 +49,7 @@ export const images = pgTable('image', {
   guest: text('guest').notNull(),
   url: text('url').notNull(),
   key: text('key').notNull(),
-  createdAt: timestamp('createdAt', { mode: 'date' }),
+  createdAt: timestamp('createdAt', { mode: 'date' }).notNull(),
 });
 
 export const accounts = pgTable(
@@ -112,10 +112,6 @@ export const imagesRelations = relations(images, ({ one }) => ({
 
 // Types
 export type User = InferSelectModel<typeof users>;
-// export type Plan = Omit<
-//   InferSelectModel<typeof plans>,
-//   'id' | 'user' | 'pricePaid'
-// >;
 export type Plan = {
   plan: string;
   eventName: string;
@@ -123,7 +119,7 @@ export type Plan = {
   pauseUploads: boolean;
   url: string;
   pin: string | null;
-  images: { guest: string; url: string; key: string }[];
+  images: { guest: string; url: string; key: string; createdAt: Date }[];
 };
 export type Plans = Pick<
   InferSelectModel<typeof plans>,

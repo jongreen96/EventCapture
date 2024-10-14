@@ -22,6 +22,7 @@ export async function getUserPlan(userId: string, eventName: string) {
           guest: true,
           url: true,
           key: true,
+          createdAt: true,
         },
       },
     },
