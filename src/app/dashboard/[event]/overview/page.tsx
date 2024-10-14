@@ -134,7 +134,7 @@ export default async function OverviewPage({
                     className='relative w-full'
                     style={{ paddingTop: '100%' }}
                   >
-                    <div className='absolute inset-0 flex items-center justify-center bg-white bg-opacity-75 text-center text-gray-500'>
+                    <div className='absolute inset-0 flex items-center justify-center text-center text-gray-500'>
                       +{plan.images.length - 26} more
                     </div>
                   </div>
