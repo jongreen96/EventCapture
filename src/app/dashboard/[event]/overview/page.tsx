@@ -118,15 +118,18 @@ export default async function OverviewPage({
               </div>
             )}
             <div className='grid grid-cols-[repeat(auto-fill,minmax(80px,1fr))] gap-2'>
-              {plan.images.slice(0, 26).map((image, index) => (
-                <div
-                  key={index}
-                  className='relative w-full'
-                  style={{ paddingTop: '100%' }}
-                >
-                  <ImagePreview image={image} />
-                </div>
-              ))}
+              {plan.images
+                .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
+                .slice(0, 26)
+                .map((image, index) => (
+                  <div
+                    key={index}
+                    className='relative w-full'
+                    style={{ paddingTop: '100%' }}
+                  >
+                    <ImagePreview image={image} />
+                  </div>
+                ))}
 
               {plan.images.length > 26 && (
                 <Link href={`/dashboard/${params.event}/photos`}>
