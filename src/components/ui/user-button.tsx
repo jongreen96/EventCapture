@@ -49,7 +49,7 @@ export default function UserButton({ user }: UserProp) {
               onClick={() => setTheme('system')}
               className={cn(
                 'rounded-none p-2',
-                globalThis.localStorage.theme === 'system' && 'bg-primary/10',
+                globalThis.localStorage?.theme === 'system' && 'bg-primary/10',
               )}
             >
               <Monitor className='size-4' />
@@ -61,7 +61,7 @@ export default function UserButton({ user }: UserProp) {
               onClick={() => setTheme('dark')}
               className={cn(
                 'rounded-none p-2',
-                globalThis.localStorage.theme === 'dark' && 'bg-primary/10',
+                globalThis.localStorage?.theme === 'dark' && 'bg-primary/10',
               )}
             >
               <Moon className='size-4' />
@@ -73,7 +73,7 @@ export default function UserButton({ user }: UserProp) {
               onClick={() => setTheme('light')}
               className={cn(
                 'rounded-none p-2',
-                globalThis.localStorage.theme === 'light' && 'bg-primary/10',
+                globalThis.localStorage?.theme === 'light' && 'bg-primary/10',
               )}
             >
               <Sun className='size-4' />
