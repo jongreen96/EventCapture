@@ -13,7 +13,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { Trash2Icon } from 'lucide-react';
 
-export default async function DeleteImageButton({
+export default function DeleteImageButton({
   image,
 }: {
   image: { url: string; guest: string; key: string };
