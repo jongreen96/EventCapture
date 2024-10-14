@@ -190,6 +190,7 @@ export async function addImageToPlan(
     guest,
     url: `https://images.event-capture.jongreen.dev/${url}`,
     key,
+    createdAt: new Date(),
   });
 }
 

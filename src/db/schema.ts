@@ -49,6 +49,7 @@ export const images = pgTable('image', {
   guest: text('guest').notNull(),
   url: text('url').notNull(),
   key: text('key').notNull(),
+  createdAt: timestamp('createdAt', { mode: 'date' }),
 });
 
 export const accounts = pgTable(

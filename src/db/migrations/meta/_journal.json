@@ -78,6 +78,13 @@
       "when": 1728751455201,
       "tag": "0010_fancy_oracle",
       "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1728928083988,
+      "tag": "0011_high_mephistopheles",
+      "breakpoints": true
     }
   ]
 }
