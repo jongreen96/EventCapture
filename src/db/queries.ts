@@ -1,5 +1,5 @@
 import { plansData } from '@/app/plans/_components/plans';
-import { and, eq, gt } from 'drizzle-orm';
+import { and, eq, gt, isNull } from 'drizzle-orm';
 import { nanoid } from 'nanoid';
 import { db } from './db';
 import { images, Plan, plans } from './schema';
@@ -142,13 +142,28 @@ export async function rollUploadLink({
     .where(and(eq(plans.user, userId), eq(plans.eventName, plan.eventName)));
 }
 
-export async function isAuthorized(pin: string, planId: string) {
-  const authorized = await db
-    .select()
-    .from(plans)
-    .where(and(eq(plans.pin, pin), eq(plans.id, planId)));
+export async function isAuthorized(pin: string | undefined, planId: string) {
+  let authorized = false;
 
-  return authorized.length > 0;
+  if (!pin) {
+    authorized =
+      (
+        await db
+          .select()
+          .from(plans)
+          .where(and(eq(plans.id, planId), isNull(plans.pin)))
+      ).length > 0;
+  } else {
+    authorized =
+      (
+        await db
+          .select()
+          .from(plans)
+          .where(and(eq(plans.pin, pin), eq(plans.id, planId)))
+      ).length > 0;
+  }
+
+  return authorized;
 }
 
 export async function isPaused(planId: string) {

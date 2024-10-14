@@ -35,7 +35,7 @@ export default function GuestUpload({
   const planId = planPreview.id;
   const [files, setFiles] = useState<FileList | null>(null);
   const [guest, setGuest] = useState<string>('');
-  const [pin, setPin] = useState<string>('');
+  const [pin, setPin] = useState<string | undefined>(undefined);
   const [isUploading, setIsUploading] = useState(false);
   const [completed, setCompleted] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);

@@ -15,8 +15,8 @@ const client = new S3Client({
 export async function POST(req: NextRequest) {
   try {
     const { files, pin, planId } = await req.json();
-    if (!pin || !planId || !files)
-      return new Response('Missing pin, planId or files', { status: 400 });
+    if (!planId || !files)
+      return new Response('Missing planId or files', { status: 400 });
 
     const paused = await isPaused(planId);
     if (paused) return new Response('Uploads are paused', { status: 403 });
