@@ -35,7 +35,7 @@ export default function PlanQuickSettings({ plan }: { plan: Plan }) {
   const [openRollDialog, setOpenRollDialog] = useState(false);
 
   return (
-    <div className='flex flex-row-reverse items-center justify-end gap-2 md:flex-row'>
+    <div className='flex items-center justify-end gap-2 md:flex-row'>
       {/* TODO: Add Sonner */}
       {plan.pauseUploads && (
         <HoverCard>
@@ -56,7 +56,7 @@ export default function PlanQuickSettings({ plan }: { plan: Plan }) {
 
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant='outline' size='icon'>
+          <Button variant='outline' size='icon' className='aspect-square'>
             <Settings className='size-5' />
           </Button>
         </DropdownMenuTrigger>
