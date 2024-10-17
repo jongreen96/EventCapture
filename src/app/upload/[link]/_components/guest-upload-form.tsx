@@ -91,11 +91,21 @@ export default function GuestUpload({
       Array.from(files).map(async (file, index) => {
         const { url, key } = presignedUrls[index];
 
+        // Upload the file to R2
         await fetch(url, {
           method: 'PUT',
           body: file,
         });
 
+        // Create preview image on server
+        await fetch('/api/create-preview', {
+          method: 'POST',
+          body: JSON.stringify({
+            key,
+          }),
+        });
+
+        // Add image to database
         await fetch('/api/add-image', {
           method: 'POST',
           body: JSON.stringify({

@@ -118,12 +118,19 @@ export async function deleteImageAction(formData: FormData) {
     return;
   }
 
-  const deleteParams = {
-    Bucket: process.env.CLOUDFLARE_BUCKET_NAME!,
-    Key: parsedData.data.key,
-  };
+  client.send(
+    new DeleteObjectCommand({
+      Bucket: process.env.CLOUDFLARE_BUCKET_NAME!,
+      Key: parsedData.data.key,
+    }),
+  );
 
-  const result = await client.send(new DeleteObjectCommand(deleteParams));
+  client.send(
+    new DeleteObjectCommand({
+      Bucket: process.env.CLOUDFLARE_BUCKET_NAME!,
+      Key: `${parsedData.data.key}-preview.webp`,
+    }),
+  );
 
   revalidatePath('/dashboard');
 }

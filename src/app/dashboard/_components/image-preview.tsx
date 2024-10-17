@@ -9,7 +9,6 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { X } from 'lucide-react';
-import Image from 'next/image';
 import DeleteImageButton from './delete-image-button';
 
 export default function ImagePreview({
@@ -20,12 +19,11 @@ export default function ImagePreview({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Image
-          src={image.url}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={image.url + '-preview.webp'}
           alt={image.guest}
           className='h-full w-full cursor-pointer rounded-md object-cover'
-          fill
-          sizes='80px'
         />
       </DialogTrigger>
       <DialogContent className='size-fit max-w-[100vw] overflow-hidden p-0'>

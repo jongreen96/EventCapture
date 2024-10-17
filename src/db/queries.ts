@@ -1,5 +1,5 @@
 import { plansData } from '@/app/plans/_components/plans';
-import { and, eq, gt, isNull } from 'drizzle-orm';
+import { and, eq, gt, isNull, or } from 'drizzle-orm';
 import { nanoid } from 'nanoid';
 import { db } from './db';
 import { images, Plan, plans } from './schema';
@@ -210,7 +210,15 @@ export async function deleteImage(url: string, userId: string) {
   for (const plan of userPlans) {
     await db
       .delete(images)
-      .where(and(eq(images.url, url), eq(images.plan_id, plan.id)))
+      .where(
+        or(
+          and(eq(images.url, url), eq(images.plan_id, plan.id)),
+          and(
+            eq(images.url, url + '-preview.webp'),
+            eq(images.plan_id, plan.id),
+          ),
+        ),
+      )
       .then(() => {
         deleted = true;
       });

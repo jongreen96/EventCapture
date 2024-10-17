@@ -86,11 +86,7 @@ export default function PhotosPageComponent({
             </>
             <div className='grid grid-cols-[repeat(auto-fill,minmax(80px,1fr))] gap-2'>
               {groupedImages[guest].map((image, imgIndex) => (
-                <div
-                  key={imgIndex}
-                  className='relative w-full'
-                  style={{ paddingTop: '100%' }}
-                >
+                <div key={imgIndex} className='relative w-full'>
                   <ImagePreview key={imgIndex} image={image} />
                 </div>
               ))}
@@ -100,11 +96,7 @@ export default function PhotosPageComponent({
       ) : (
         <div className='grid grid-cols-[repeat(auto-fill,minmax(80px,1fr))] gap-2'>
           {sortedImages.map((image, index) => (
-            <div
-              key={index}
-              className='relative w-full'
-              style={{ paddingTop: '100%' }}
-            >
+            <div key={index} className='relative w-full'>
               <ImagePreview key={index} image={image} />
             </div>
           ))}
