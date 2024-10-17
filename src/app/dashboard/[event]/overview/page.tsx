@@ -75,9 +75,12 @@ export default async function OverviewPage({
             </CardTitle>
           </CardHeader>
           <CardContent className='text-5xl font-semibold tracking-tight'>
-            TBC
+            {(
+              plan.images.reduce((acc, image) => acc + image.size, 0) /
+              1024 ** 3
+            ).toFixed(2)}
             <span className='ml-2 text-sm font-normal'>GB</span>
-            <span className='ml-2 text-sm font-normal'>/ 100 GB</span>
+            {/* <span className='ml-2 text-sm font-normal'>/ 100 GB</span> */}
           </CardContent>
         </Card>
 

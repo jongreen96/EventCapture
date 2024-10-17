@@ -22,6 +22,7 @@ export async function getUserPlan(userId: string, eventName: string) {
           guest: true,
           url: true,
           key: true,
+          size: true,
           createdAt: true,
         },
       },
@@ -183,6 +184,7 @@ export async function addImageToPlan(
   guest: string,
   url: string,
   key: string,
+  size: number,
 ) {
   if (!planId) return;
 
@@ -191,6 +193,7 @@ export async function addImageToPlan(
     guest,
     url: `https://images.event-capture.jongreen.dev/${url}`,
     key,
+    size,
     createdAt: new Date(),
   });
 }

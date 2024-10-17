@@ -111,6 +111,7 @@ export default function GuestUpload({
           body: JSON.stringify({
             planId,
             guest,
+            size: file.size,
             url: key,
             key: fileMetadata[index].name,
           }),

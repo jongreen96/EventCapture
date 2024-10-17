@@ -1,0 +1,1 @@
+ALTER TABLE "image" ADD COLUMN "size" integer NOT NULL;
