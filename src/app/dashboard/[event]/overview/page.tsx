@@ -35,7 +35,7 @@ export default async function OverviewPage({
   );
 
   return (
-    <div className='space-y-4'>
+    <div className='select-none space-y-4'>
       <section className='grid grid-cols-2 gap-4 md:grid-cols-4'>
         <Link href={`/dashboard/${params.event}/photos`}>
           <Card className='cursor-pointer'>
@@ -51,7 +51,7 @@ export default async function OverviewPage({
           </Card>
         </Link>
 
-        <Card className='cursor-pointer'>
+        <Card>
           <CardHeader className='pb-0'>
             <CardTitle className='flex items-center gap-2 text-base'>
               <User className='size-4 text-muted-foreground' /> Guests
@@ -67,7 +67,7 @@ export default async function OverviewPage({
           </CardContent>
         </Card>
 
-        <Card className='cursor-pointer'>
+        <Card>
           <CardHeader className='pb-0'>
             <CardTitle className='flex items-center gap-2 text-base'>
               <BarChart3 className='size-4 text-muted-foreground' />
@@ -86,7 +86,6 @@ export default async function OverviewPage({
 
         <Card
           className={cn(
-            'cursor-pointer',
             hoursRemaining < 24 && 'animate-pulse bg-destructive/50',
           )}
         >
@@ -143,11 +142,10 @@ export default async function OverviewPage({
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className='select-none'>
           <CardHeader>
             <CardTitle className='flex items-center justify-between gap-2'>
               Guests
-              <Button variant='outline'>View All</Button>
             </CardTitle>
           </CardHeader>
           <CardContent>
