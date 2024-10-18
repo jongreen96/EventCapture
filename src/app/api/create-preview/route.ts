@@ -29,6 +29,7 @@ export async function POST(req: NextRequest) {
 
   // Create preview image
   const previewImage = await Sharp(await Body.transformToByteArray())
+    .rotate()
     .resize(80, 80, {
       fit: 'cover',
       position: 'center',
