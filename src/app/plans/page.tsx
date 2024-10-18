@@ -19,7 +19,7 @@ export default async function PlansPage() {
   const plans = await getUserPlans(session.user.id);
 
   return (
-    <main>
+    <main className='flex min-h-[calc(100vh-52px)] flex-col justify-center'>
       <Plans reference={false} userId={session.user.id} plans={plans} />
 
       {plans && plans.length > 0 && (
