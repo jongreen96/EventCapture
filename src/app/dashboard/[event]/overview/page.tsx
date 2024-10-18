@@ -1,5 +1,11 @@
+import { plansData } from '@/app/plans/_components/plans';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from '@/components/ui/hover-card';
 import {
   Table,
   TableBody,
@@ -11,7 +17,13 @@ import {
 import { getUserPlan } from '@/db/queries';
 import getSession from '@/lib/getSession';
 import { cn } from '@/lib/utils';
-import { BarChart3, Calendar, ImageIcon, User } from 'lucide-react';
+import {
+  BarChart3,
+  Calendar,
+  ImageIcon,
+  MessageCircleQuestionIcon,
+  User,
+} from 'lucide-react';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import ImagePreview from '../../_components/image-preview';
@@ -69,9 +81,20 @@ export default async function OverviewPage({
 
         <Card>
           <CardHeader className='pb-0'>
-            <CardTitle className='flex items-center gap-2 text-base'>
-              <BarChart3 className='size-4 text-muted-foreground' />
-              Usage
+            <CardTitle className='flex items-center justify-between gap-2 text-base'>
+              <div className='flex items-center gap-2 text-base'>
+                <BarChart3 className='size-4 text-muted-foreground' />
+                Usage
+              </div>
+              <HoverCard>
+                <HoverCardTrigger>
+                  <MessageCircleQuestionIcon className='size-4 text-muted-foreground' />
+                </HoverCardTrigger>
+                <HoverCardContent>
+                  {/* @ts-ignore */}
+                  Limit {plansData[plan.plan].storageLimit} GB
+                </HoverCardContent>
+              </HoverCard>
             </CardTitle>
           </CardHeader>
           <CardContent className='text-5xl font-semibold tracking-tight'>
@@ -80,7 +103,6 @@ export default async function OverviewPage({
               1024 ** 3
             ).toFixed(2)}
             <span className='ml-2 text-sm font-normal'>GB</span>
-            {/* <span className='ml-2 text-sm font-normal'>/ 100 GB</span> */}
           </CardContent>
         </Card>
 
