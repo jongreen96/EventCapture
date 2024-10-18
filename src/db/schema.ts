@@ -114,7 +114,7 @@ export const imagesRelations = relations(images, ({ one }) => ({
 // Types
 export type User = InferSelectModel<typeof users>;
 export type Plan = {
-  plan: 'small' | 'medium' | 'large' | 'enterprise';
+  plan: string;
   eventName: string;
   endDate: Date;
   pauseUploads: boolean;
