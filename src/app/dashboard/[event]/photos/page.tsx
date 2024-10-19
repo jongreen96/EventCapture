@@ -5,8 +5,10 @@ import PhotosPageComponent from './_components/photos';
 
 export default async function PhotosPage({
   params,
+  searchParams,
 }: {
   params: { event: string };
+  searchParams: URLSearchParams;
 }) {
   const session = await getSession();
   if (!session?.user?.id) redirect('/');
@@ -17,6 +19,7 @@ export default async function PhotosPage({
   );
   if (!plan) redirect('/plans');
   if (plan.images.length === 0) redirect(`/dashboard/${params.event}/overview`);
+  const sort = searchParams['sort'] as unknown as 'oldest' | 'guest';
 
-  return <PhotosPageComponent plan={plan} event={params.event} />;
+  return <PhotosPageComponent plan={plan} event={params.event} sort={sort} />;
 }

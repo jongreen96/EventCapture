@@ -10,6 +10,7 @@ import {
 } from '@/components/ui/dialog';
 import { X } from 'lucide-react';
 import DeleteImageButton from './delete-image-button';
+import DownloadImageButton from './download-image-button';
 
 export default function ImagePreview({
   image,
@@ -41,6 +42,8 @@ export default function ImagePreview({
             </DialogDescription>
           </div>
           <div className='flex items-center gap-2'>
+            <DownloadImageButton image={image} />
+
             <DeleteImageButton image={image} />
 
             <DialogClose asChild>
