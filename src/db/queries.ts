@@ -250,8 +250,5 @@ export async function checkStorageCapacity(uploadSize: number, planId: string) {
 
   const totalSize = allImages.reduce((acc, curr) => acc + curr.size, 0);
 
-  console.log('total', totalSize + uploadSize);
-  console.log('limit', 1024 ** 3 * plan.storageLimit);
-
   return totalSize + uploadSize <= 1024 ** 3 * plan.storageLimit;
 }
