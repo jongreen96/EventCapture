@@ -1,4 +1,3 @@
-import { plansData } from '@/app/plans/_components/plans';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
@@ -46,6 +45,9 @@ export default async function OverviewPage({
     (plan.endDate.getTime() - new Date().getTime()) / 1000 / 60 / 60,
   );
 
+  const storageUsed =
+    plan.images.reduce((acc, image) => acc + image.size, 0) / 1024 ** 3;
+
   return (
     <div className='select-none space-y-4'>
       <section className='grid grid-cols-2 gap-4 md:grid-cols-4'>
@@ -79,7 +81,12 @@ export default async function OverviewPage({
           </CardContent>
         </Card>
 
-        <Card>
+        <Card
+          className={cn(
+            storageUsed >= plan.storageLimit * 0.9 &&
+              'animate-pulse bg-destructive/50',
+          )}
+        >
           <CardHeader className='pb-0'>
             <CardTitle className='flex items-center justify-between gap-2 text-base'>
               <div className='flex items-center gap-2 text-base'>
@@ -91,17 +98,13 @@ export default async function OverviewPage({
                   <MessageCircleQuestionIcon className='size-4 text-muted-foreground' />
                 </HoverCardTrigger>
                 <HoverCardContent>
-                  {/* @ts-ignore */}
-                  Limit {plansData[plan.plan].storageLimit} GB
+                  Limit {plan.storageLimit} GB
                 </HoverCardContent>
               </HoverCard>
             </CardTitle>
           </CardHeader>
           <CardContent className='text-5xl font-semibold tracking-tight'>
-            {(
-              plan.images.reduce((acc, image) => acc + image.size, 0) /
-              1024 ** 3
-            ).toFixed(2)}
+            {storageUsed > 0 ? storageUsed.toFixed(2) : 0}
             <span className='ml-2 text-sm font-normal'>GB</span>
           </CardContent>
         </Card>

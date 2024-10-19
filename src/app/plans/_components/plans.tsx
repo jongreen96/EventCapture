@@ -13,13 +13,13 @@ import PlanDialog from './plan-dialog';
 export const plansData = {
   small: {
     name: 'small',
-    price: 5,
+    price: 10,
     duration: 1,
     guests: Infinity,
     storageLimit: 5, // GB
     // ~ 1000 images @ 5MB each
     // £0.33 total costs @ max usage inc stripe fees (1.5% + 20p)
-    // £4.67 profit
+    // £9.67 profit
   },
   medium: {
     name: 'medium',
@@ -44,9 +44,9 @@ export const plansData = {
   enterprise: {
     name: 'enterprise',
     price: 500,
-    duration: 12,
+    duration: 6,
     guests: Infinity,
-    storageLimit: 1024, // GB
+    storageLimit: 2048, // GB
     // ~ 200,000 images @ 5MB each
     // £142.87 total costs @ max usage inc stripe fees (1.5% + 20p)
     // £357.13 profit
@@ -83,7 +83,7 @@ export default function Plans({
               </p>
               <div className='whitespace-nowrap text-xs'>
                 <p>{plansData.small.storageLimit} GB Limit</p>
-                <p>{plansData.small.duration} months storage</p>
+                <p>{plansData.small.duration} month storage</p>
                 <p>
                   {plansData.small.guests === Infinity
                     ? 'Unlimited'

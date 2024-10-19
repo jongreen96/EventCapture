@@ -36,6 +36,7 @@ export const plans = pgTable(
     pauseUploads: boolean('pauseUploads').notNull().default(false),
     url: text('url').notNull().unique(),
     pin: text('pin'),
+    storageLimit: integer('storageLimit').notNull(),
   },
   (plan) => ({
     unq: unique().on(plan.user, plan.eventName),
@@ -120,6 +121,7 @@ export type Plan = {
   pauseUploads: boolean;
   url: string;
   pin: string | null;
+  storageLimit: number;
   images: {
     guest: string;
     url: string;

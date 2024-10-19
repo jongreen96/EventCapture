@@ -60,6 +60,19 @@ export default function GuestUpload({
     setErrorMessage(null);
     setIsUploading(true);
 
+    const hasStorageCapacity = await fetch('/api/check-storage', {
+      method: 'POST',
+      body: JSON.stringify({
+        uploadSize: Array.from(files).reduce((acc, file) => acc + file.size, 0),
+        planId,
+      }),
+    });
+    if (!hasStorageCapacity.ok) {
+      setErrorMessage('Storage limit exceeded.');
+      setIsUploading(false);
+      return;
+    }
+
     const fileMetadata = Array.from(files).map((file) => ({
       name: planId + '/' + nanoid(5) + '-' + file.name,
       type: file.type,

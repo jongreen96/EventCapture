@@ -15,6 +15,7 @@ export async function getUserPlan(userId: string, eventName: string) {
       pauseUploads: true,
       url: true,
       pin: true,
+      storageLimit: true,
     },
     with: {
       images: {
@@ -94,6 +95,7 @@ export async function addUserPlan({
     plan,
     eventName,
     pricePaid: plansData[plan].price,
+    storageLimit: plansData[plan].storageLimit,
     endDate,
     url,
   });
@@ -228,4 +230,28 @@ export async function deleteImage(url: string, userId: string) {
   }
 
   return deleted;
+}
+
+export async function checkStorageCapacity(uploadSize: number, planId: string) {
+  const plan = await db.query.plans.findFirst({
+    columns: {
+      storageLimit: true,
+    },
+    where: eq(plans.id, planId),
+  });
+  if (!plan) return false;
+
+  const allImages = await db.query.images.findMany({
+    columns: {
+      size: true,
+    },
+    where: eq(images.plan_id, planId),
+  });
+
+  const totalSize = allImages.reduce((acc, curr) => acc + curr.size, 0);
+
+  console.log('total', totalSize + uploadSize);
+  console.log('limit', 1024 ** 3 * plan.storageLimit);
+
+  return totalSize + uploadSize <= 1024 ** 3 * plan.storageLimit;
 }
