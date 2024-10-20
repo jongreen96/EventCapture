@@ -12,8 +12,8 @@ const client = new S3Client({
   },
 });
 
-export async function GET(req: Request) {
-  const event = req.url.split('?event=')[1];
+export async function POST(req: Request) {
+  const { event, guest } = await req.json();
   const session = await getSession();
   if (!session?.user?.id) return new Response('Unauthorized', { status: 401 });
 
@@ -24,9 +24,13 @@ export async function GET(req: Request) {
     return new Response('Downloads exeeded, contact support', { status: 403 });
   }
 
+  const images = plan.images.filter((image) =>
+    guest ? image.guest === guest : true,
+  );
+
   // Download all images from R2 via s3 api and return a zip file
   const imageBlobs = await Promise.all(
-    plan.images.map(async (image) => {
+    images.map(async (image) => {
       const command = new GetObjectCommand({
         Bucket: process.env.CLOUDFLARE_BUCKET_NAME!,
         Key: image.key,
@@ -64,7 +68,7 @@ export async function GET(req: Request) {
   const zipBlob = await zip.generateAsync({ type: 'blob' });
 
   const downloadSize =
-    plan.images.reduce((acc, image) => acc + image.size, 0) / 1024 ** 2;
+    images.reduce((acc, image) => acc + image.size, 0) / 1024 ** 2;
   await addDownloadUsage(session.user.id, plan.eventName, downloadSize);
 
   return new Response(zipBlob, {

@@ -108,10 +108,15 @@ export default async function PhotosPage({
       {sort === 'guest' ? (
         Object.keys(groupedImages).map((guest, index) => (
           <div key={index}>
-            <>
+            <div className='flex items-center gap-2 pb-2'>
               {guest}
-              <Separator className='mb-4' />
-            </>
+              <Separator className='shrink' />
+              <DownloadAllImagesButton
+                event={plan.eventName}
+                downloadUsed={plan.downloadUsed}
+                guest={guest}
+              />
+            </div>
             <div className='grid grid-cols-[repeat(auto-fill,minmax(80px,1fr))] gap-2'>
               {groupedImages[guest].map((image, imgIndex) => (
                 <div key={imgIndex} className='relative w-full'>

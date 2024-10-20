@@ -7,9 +7,11 @@ import { useState } from 'react';
 export default function DownloadAllImagesButton({
   event,
   downloadUsed,
+  guest,
 }: {
   event: string;
   downloadUsed: number;
+  guest?: string;
 }) {
   const [clicked, setClicked] = useState(false);
   const [completed, setCompleted] = useState(false);
@@ -17,13 +19,18 @@ export default function DownloadAllImagesButton({
   const handleDownload = async () => {
     setClicked(true);
     try {
-      const response = await fetch(`/api/download-all-images?event=${event}`);
+      const response = await fetch(`/api/download-all-images`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ event, guest }),
+      });
+
       if (response.ok) {
         const blob = await response.blob();
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = 'images.zip';
+        a.download = `${event}.zip`;
         document.body.appendChild(a);
         a.click();
         a.remove();
@@ -70,7 +77,7 @@ export default function DownloadAllImagesButton({
   return (
     <Button variant='outline' onClick={handleDownload}>
       <DownloadIcon className='mr-2 size-5' />
-      Download All Images
+      Download {guest ? `${guest.split(' ')[0]}'s` : 'All'}
     </Button>
   );
 }
