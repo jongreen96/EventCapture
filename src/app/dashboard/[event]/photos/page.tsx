@@ -12,6 +12,7 @@ import getSession from '@/lib/getSession';
 import { ArrowLeft, SortDesc } from 'lucide-react';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
+import DownloadAllImagesButton from '../../_components/download-all-images-button';
 
 export default async function PhotosPage({
   params,
@@ -63,6 +64,11 @@ export default async function PhotosPage({
         </Button>
 
         <div className='flex items-center gap-2'>
+          <DownloadAllImagesButton
+            event={plan.eventName}
+            downloadUsed={plan.downloadUsed}
+          />
+
           <Select>
             <SelectTrigger>
               <SortDesc className='mr-2 size-4' />

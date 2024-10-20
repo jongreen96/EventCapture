@@ -15,12 +15,18 @@ const client = new S3Client({
 export default async function DownloadImageButton({
   image,
 }: {
-  image: { url: string; guest: string; key: string };
+  image: { url: string; guest: string; key: string; createdAt: Date };
 }) {
+  const date = new Date(image.createdAt)
+    .toLocaleString('en-GB', { hour12: false })
+    .replace(/\//g, '-')
+    .replace(/, /g, '_')
+    .replace(/:/g, '-');
+
   const command = new GetObjectCommand({
     Bucket: process.env.CLOUDFLARE_BUCKET_NAME!,
     Key: image.key,
-    ResponseContentDisposition: `attachment; filename="${image.key.split('-').pop()}"`,
+    ResponseContentDisposition: `attachment; filename="${date}_${image.key.split('/')[1].slice(6)}"`,
   });
 
   const presignedUrl = await getSignedUrl(client, command, {

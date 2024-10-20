@@ -1,0 +1,1 @@
+ALTER TABLE "plan" ADD COLUMN "downloadUsed" integer DEFAULT 0 NOT NULL;

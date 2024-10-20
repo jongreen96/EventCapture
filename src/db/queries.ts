@@ -16,6 +16,7 @@ export async function getUserPlan(userId: string, eventName: string) {
       url: true,
       pin: true,
       storageLimit: true,
+      downloadUsed: true,
     },
     with: {
       images: {
@@ -251,4 +252,24 @@ export async function checkStorageCapacity(uploadSize: number, planId: string) {
   const totalSize = allImages.reduce((acc, curr) => acc + curr.size, 0);
 
   return totalSize + uploadSize <= 1024 ** 3 * plan.storageLimit;
+}
+
+export async function addDownloadUsage(
+  userId: string,
+  eventName: string,
+  downloadSize: number,
+) {
+  const plan = await db.query.plans.findFirst({
+    columns: {
+      downloadUsed: true,
+    },
+    where: and(eq(plans.user, userId), eq(plans.eventName, eventName)),
+  });
+
+  if (!plan) return;
+
+  await db
+    .update(plans)
+    .set({ downloadUsed: plan.downloadUsed + Number(downloadSize.toFixed()) })
+    .where(and(eq(plans.user, userId), eq(plans.eventName, eventName)));
 }

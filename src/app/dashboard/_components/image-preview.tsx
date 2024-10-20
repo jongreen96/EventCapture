@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -20,7 +21,6 @@ export default function ImagePreview({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={image.url + '-preview.webp'}
           alt={image.guest}
@@ -55,7 +55,6 @@ export default function ImagePreview({
         </DialogHeader>
 
         <div>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={image.url}
             alt={image.guest}
