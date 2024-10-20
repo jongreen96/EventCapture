@@ -10,5 +10,9 @@ export default async function UploadPage({
   const plan = await getPlanPreview(params.link);
   if (!plan) redirect('/');
 
-  return <GuestUpload planPreview={plan} link={params.link} />;
+  return (
+    <main className='flex min-h-[calc(100vh-52px)] items-center justify-center'>
+      <GuestUpload planPreview={plan} link={params.link} />
+    </main>
+  );
 }
