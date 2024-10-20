@@ -65,21 +65,23 @@ export default async function OverviewPage({
           </Card>
         </Link>
 
-        <Card>
-          <CardHeader className='pb-0'>
-            <CardTitle className='flex items-center gap-2 text-base'>
-              <User className='size-4 text-muted-foreground' /> Guests
-            </CardTitle>
-          </CardHeader>
-          <CardContent className='text-5xl font-semibold tracking-tight'>
-            {
-              plan.images.reduce((acc, image) => {
-                acc.add(image.guest);
-                return acc;
-              }, new Set<string>()).size
-            }
-          </CardContent>
-        </Card>
+        <Link href={`/dashboard/${params.event}/photos?sort=guest`}>
+          <Card>
+            <CardHeader className='pb-0'>
+              <CardTitle className='flex items-center gap-2 text-base'>
+                <User className='size-4 text-muted-foreground' /> Guests
+              </CardTitle>
+            </CardHeader>
+            <CardContent className='text-5xl font-semibold tracking-tight'>
+              {
+                plan.images.reduce((acc, image) => {
+                  acc.add(image.guest);
+                  return acc;
+                }, new Set<string>()).size
+              }
+            </CardContent>
+          </Card>
+        </Link>
 
         <Card
           className={cn(
