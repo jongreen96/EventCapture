@@ -1,7 +1,13 @@
 'use server';
 
 import { signIn, signOut } from '@/auth';
-import { deleteImage, rollUploadLink, setPin, updatePause } from '@/db/queries';
+import {
+  deleteImage,
+  getUserPlan,
+  rollUploadLink,
+  setPin,
+  updatePause,
+} from '@/db/queries';
 import { Plan } from '@/db/schema';
 import getSession from '@/lib/getSession';
 import { DeleteObjectCommand, S3Client } from '@aws-sdk/client-s3';
@@ -133,4 +139,58 @@ export async function deleteImageAction(formData: FormData) {
   );
 
   revalidatePath('/dashboard');
+}
+
+export async function deleteImagesAction(formData: FormData) {
+  const session = await getSession();
+  if (!session?.user?.id) return;
+
+  const data = Object.fromEntries(formData);
+
+  const deleteImagesSchema = z.object({
+    guest: z.string().min(1),
+    eventName: z.string().min(1),
+  });
+
+  const parsedData = deleteImagesSchema.safeParse(data);
+
+  if (!parsedData.success) return;
+
+  const userId = session.user.id;
+  const eventName = parsedData.data.eventName;
+
+  if (!userId || !eventName) return;
+
+  const plan = await getUserPlan(userId, eventName);
+  if (!plan) return;
+
+  const imagesToDelete = plan.images.filter(
+    (image) => image.guest === parsedData.data.guest,
+  );
+
+  const deleted = await Promise.all(
+    imagesToDelete.map((image) => {
+      const del = deleteImage(image.url, userId);
+
+      client.send(
+        new DeleteObjectCommand({
+          Bucket: process.env.CLOUDFLARE_BUCKET_NAME!,
+          Key: image.key,
+        }),
+      );
+
+      client.send(
+        new DeleteObjectCommand({
+          Bucket: process.env.CLOUDFLARE_BUCKET_NAME!,
+          Key: `${image.key}-preview.webp`,
+        }),
+      );
+
+      return del;
+    }),
+  );
+
+  if (!deleted.includes(false)) {
+    revalidatePath(`/dashboard/${eventName}/photos`);
+  }
 }

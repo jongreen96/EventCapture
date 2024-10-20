@@ -12,6 +12,7 @@ import getSession from '@/lib/getSession';
 import { ArrowLeft, SortDesc } from 'lucide-react';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
+import DeleteImagesButton from '../../_components/delete-images-button';
 import DownloadAllImagesButton from '../../_components/download-all-images-button';
 
 export default async function PhotosPage({
@@ -116,6 +117,7 @@ export default async function PhotosPage({
                 downloadUsed={plan.downloadUsed}
                 guest={guest}
               />
+              <DeleteImagesButton guest={guest} eventName={plan.eventName} />
             </div>
             <div className='grid grid-cols-[repeat(auto-fill,minmax(80px,1fr))] gap-2'>
               {groupedImages[guest].map((image, imgIndex) => (
