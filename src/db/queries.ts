@@ -1,5 +1,5 @@
 import { plansData } from '@/app/plans/_components/plans';
-import { and, eq, gt, isNull, or } from 'drizzle-orm';
+import { and, eq, gt, isNull, lt, or } from 'drizzle-orm';
 import { nanoid } from 'nanoid';
 import { db } from './db';
 import { images, Plan, plans } from './schema';
@@ -233,6 +233,10 @@ export async function deleteImage(url: string, userId: string) {
   return deleted;
 }
 
+export async function deleteSpecificImage(key: string) {
+  await db.delete(images).where(eq(images.key, key));
+}
+
 export async function checkStorageCapacity(uploadSize: number, planId: string) {
   const plan = await db.query.plans.findFirst({
     columns: {
@@ -272,4 +276,22 @@ export async function addDownloadUsage(
     .update(plans)
     .set({ downloadUsed: plan.downloadUsed + Number(downloadSize.toFixed()) })
     .where(and(eq(plans.user, userId), eq(plans.eventName, eventName)));
+}
+
+export async function getExpiredPlans() {
+  const expiredPlans = await db.query.plans.findMany({
+    columns: {
+      id: true,
+    },
+    where: lt(plans.endDate, new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)),
+    with: {
+      images: {
+        columns: {
+          key: true,
+        },
+      },
+    },
+  });
+
+  return expiredPlans;
 }
