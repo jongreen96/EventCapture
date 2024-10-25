@@ -37,5 +37,6 @@ export async function GET() {
 
   console.log('Cleanup completed. Deleted', expiredPlans.length, 'plans');
 
+  
   return new Response('Cleanup done');
 }
