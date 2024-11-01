@@ -65,10 +65,7 @@ export default async function PhotosPage({
         </Button>
 
         <div className='flex items-center gap-2'>
-          <DownloadAllImagesButton
-            event={plan.eventName}
-            downloadUsed={plan.downloadUsed}
-          />
+          <DownloadAllImagesButton event={plan.eventName} />
 
           <Select>
             <SelectTrigger>
@@ -112,11 +109,7 @@ export default async function PhotosPage({
             <div className='flex items-center gap-2 pb-2'>
               {guest}
               <Separator className='shrink' />
-              <DownloadAllImagesButton
-                event={plan.eventName}
-                downloadUsed={plan.downloadUsed}
-                guest={guest}
-              />
+              <DownloadAllImagesButton event={plan.eventName} guest={guest} />
               <DeleteImagesButton guest={guest} eventName={plan.eventName} />
             </div>
             <div className='grid grid-cols-[repeat(auto-fill,minmax(80px,1fr))] gap-2'>

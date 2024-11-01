@@ -8,11 +8,9 @@ import { useState } from 'react';
 
 export default function DownloadAllImagesButton({
   event,
-  downloadUsed,
   guest,
 }: {
   event: string;
-  downloadUsed: number;
   guest?: string;
 }) {
   const [clicked, setClicked] = useState(false);
@@ -77,15 +75,6 @@ export default function DownloadAllImagesButton({
       <Button variant='outline' disabled className='select-none'>
         <Check className='mr-2 size-5' />
         Download completed
-      </Button>
-    );
-  }
-
-  if (downloadUsed > 1024 ** 2) {
-    return (
-      <Button variant='outline' disabled className='select-none'>
-        <DownloadIcon className='mr-2 size-5' />
-        Downloads exceeded, contact support
       </Button>
     );
   }

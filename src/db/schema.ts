@@ -37,7 +37,6 @@ export const plans = pgTable(
     url: text('url').notNull().unique(),
     pin: text('pin'),
     storageLimit: integer('storageLimit').notNull(),
-    downloadUsed: integer('downloadUsed').notNull().default(0),
   },
   (plan) => ({
     unq: unique().on(plan.user, plan.eventName),
@@ -123,7 +122,6 @@ export type Plan = {
   url: string;
   pin: string | null;
   storageLimit: number;
-  downloadUsed: number;
   images: {
     guest: string;
     url: string;
