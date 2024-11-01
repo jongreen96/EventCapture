@@ -14,6 +14,7 @@ export default function DownloadAllImagesButton({
   guest?: string;
 }) {
   const [clicked, setClicked] = useState(false);
+  const [finalizing, setFinalizing] = useState(false);
   const [completed, setCompleted] = useState(false);
   const [filesToDownload, setFilesToDownload] = useState(0);
 
@@ -44,7 +45,9 @@ export default function DownloadAllImagesButton({
           setFilesToDownload((prev) => prev - 1);
         }
 
-        zip.generateAsync({ type: 'blob' }).then((content) => {
+        setFinalizing(true);
+
+        await zip.generateAsync({ type: 'blob' }).then((content) => {
           saveAs(content, `${guest ? guest + '-' + event : event}.zip`);
         });
 
@@ -57,15 +60,25 @@ export default function DownloadAllImagesButton({
       console.error('Error downloading images:', error);
     } finally {
       setClicked(false);
+      setFinalizing(false);
       setCompleted(true);
     }
   };
+
+  if (finalizing) {
+    return (
+      <Button variant='outline' disabled className='select-none'>
+        <Loader2 className='mr-2 size-5 animate-spin' />
+        Finalizing download
+      </Button>
+    );
+  }
 
   if (clicked && !completed) {
     return (
       <Button variant='outline' disabled className='select-none'>
         <Loader2 className='mr-2 size-5 animate-spin' />
-        {filesToDownload || 'estimating'} Images downloading
+        {filesToDownload || 'Estimating'} Images downloading
       </Button>
     );
   }
