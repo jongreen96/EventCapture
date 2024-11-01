@@ -1,6 +1,8 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
+import { saveAs } from 'file-saver';
+import JSZip from 'jszip';
 import { Check, DownloadIcon, Loader2 } from 'lucide-react';
 import { useState } from 'react';
 
@@ -15,25 +17,39 @@ export default function DownloadAllImagesButton({
 }) {
   const [clicked, setClicked] = useState(false);
   const [completed, setCompleted] = useState(false);
+  const [filesToDownload, setFilesToDownload] = useState(0);
 
   const handleDownload = async () => {
     setClicked(true);
     try {
-      const response = await fetch(`/api/download-all-images`, {
+      const response = await fetch(`/api/download-images`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ event, guest }),
       });
 
       if (response.ok) {
-        const blob = await response.blob();
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `${event}.zip`;
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
+        const presignedUrls = (await response.json()) as {
+          key: string;
+          url: string;
+        }[];
+
+        setFilesToDownload(presignedUrls.length);
+
+        const zip = new JSZip();
+
+        for (const url of presignedUrls) {
+          const response = await fetch(url.url);
+          const blob = await response.blob();
+          const filename = url.key.split('/').pop()?.slice(6) || 'image';
+          zip.file(filename, blob);
+          setFilesToDownload((prev) => prev - 1);
+        }
+
+        zip.generateAsync({ type: 'blob' }).then((content) => {
+          saveAs(content, `${guest ? guest + '-' + event : event}.zip`);
+        });
+
         setCompleted(true);
       } else {
         setClicked(false);
@@ -51,7 +67,7 @@ export default function DownloadAllImagesButton({
     return (
       <Button variant='outline' disabled className='select-none'>
         <Loader2 className='mr-2 size-5 animate-spin' />
-        Preparing download...
+        {filesToDownload || 'estimating'} Images downloading
       </Button>
     );
   }
