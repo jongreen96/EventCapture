@@ -9,6 +9,8 @@ export default function ImageInput({
   files: FileList | null;
   setFiles: React.Dispatch<React.SetStateAction<FileList | null>>;
 }) {
+  const MAX_FILES = 250;
+
   const handleFileClick = () => {
     const fileInput = document.getElementById('fileInput') as HTMLInputElement;
     fileInput?.click();
@@ -21,6 +23,11 @@ export default function ImageInput({
 
     setFiles((prevFiles) => {
       if (!prevFiles) {
+        if (newFilesArray.length > MAX_FILES) {
+          alert(`You can only upload ${MAX_FILES} files at a time`);
+          return new DataTransfer().files;
+        }
+
         return newFilesArray as unknown as FileList;
       }
 
@@ -39,6 +46,11 @@ export default function ImageInput({
             ),
         ),
       ];
+
+      if (combinedFiles.length > MAX_FILES) {
+        alert(`You can only upload ${MAX_FILES} files at a time`);
+        return prevFiles || new DataTransfer().files;
+      }
 
       // Create a new FileList from the combined array
       const dataTransfer = new DataTransfer();
@@ -72,6 +84,7 @@ export default function ImageInput({
             <p className='text-sm text-gray-500'>
               {files.length} file{files.length > 1 ? 's' : ''} selected
             </p>
+            <p className='text-sm text-gray-500/50'>(max 250)</p>
           </>
         ) : (
           'Upload Photos'
