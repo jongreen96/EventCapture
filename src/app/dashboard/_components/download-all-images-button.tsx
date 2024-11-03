@@ -38,6 +38,9 @@ export default function DownloadAllImagesButton({
 
         const zip = new JSZip();
 
+        // TODO: Add user name to image filename
+        // TODO: Possibly paginate the download to avoid memory issues
+
         for (const url of presignedUrls) {
           const response = await fetch(url.url);
           const blob = await response.blob();

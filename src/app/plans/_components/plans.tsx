@@ -53,6 +53,8 @@ export const plansData = {
   },
 };
 
+// TODO: Update image estimations to be more accurate
+
 export default function Plans({
   reference,
   userId = '',
