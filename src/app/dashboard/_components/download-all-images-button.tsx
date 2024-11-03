@@ -1,6 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 import { saveAs } from 'file-saver';
 import JSZip from 'jszip';
 import { Check, DownloadIcon, Loader2 } from 'lucide-react';
@@ -93,9 +94,14 @@ export default function DownloadAllImagesButton({
   }
 
   return (
-    <Button variant='outline' onClick={handleDownload}>
-      <DownloadIcon className='mr-2 size-5' />
-      Download {guest ? `${guest.split(' ')[0]}'s` : 'All'}
+    <Button
+      variant='outline'
+      onClick={handleDownload}
+      size={guest ? 'icon' : 'default'}
+      className={cn('flex items-center gap-2', guest && 'aspect-square')}
+    >
+      <DownloadIcon className='size-5' />
+      {!guest && 'Download All'}
     </Button>
   );
 }
