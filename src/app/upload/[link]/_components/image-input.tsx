@@ -53,7 +53,7 @@ export default function ImageInput({
         id='fileInput'
         type='file'
         name='files'
-        accept='image/*, video/*'
+        accept='image/*'
         multiple
         className='hidden'
         onChange={handleFileChange}
