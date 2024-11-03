@@ -87,7 +87,10 @@ export default function ImageInput({
             <p className='text-sm text-gray-500/50'>(max 250)</p>
           </>
         ) : (
-          'Upload Photos'
+          <>
+            <p>Upload Photos</p>
+            <p className='text-sm text-gray-500/50'>(max 250)</p>
+          </>
         )}
       </Button>
     </>
