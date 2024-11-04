@@ -41,13 +41,16 @@ export default function DownloadAllImagesButton({
         // TODO: Add user name to image filename
         // TODO: Possibly paginate the download to avoid memory issues
 
-        for (const url of presignedUrls) {
+        const downloadPromises = presignedUrls.map(async (url) => {
           const response = await fetch(url.url);
           const blob = await response.blob();
           const filename = url.key.split('/').pop()?.slice(6) || 'image';
           zip.file(filename, blob);
           setFilesToDownload((prev) => prev - 1);
-        }
+        });
+
+        await Promise.all(downloadPromises);
+        setFilesToDownload(0);
 
         setFinalizing(true);
 
