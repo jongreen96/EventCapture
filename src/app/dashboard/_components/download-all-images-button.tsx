@@ -34,7 +34,7 @@ export default function DownloadAllImagesButton({
           url: string;
         }[];
 
-        const chunkSize = 500; // Number of images per batch
+        const chunkSize = 250; // Number of images per batch
         const chunks = [];
         for (let i = 0; i < presignedUrls.length; i += chunkSize) {
           chunks.push(presignedUrls.slice(i, i + chunkSize));
@@ -60,7 +60,7 @@ export default function DownloadAllImagesButton({
           const content = await zip.generateAsync({ type: 'blob' });
           saveAs(
             content,
-            `${guest ? guest + '-' + event : event}-part-${i + 1}.zip`,
+            `${guest ? guest + '-' + event : event}${i > 0 ? `-part-${i + 1}` : ''}.zip`,
           );
 
           setFinalizing(false);
