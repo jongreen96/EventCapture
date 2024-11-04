@@ -34,29 +34,37 @@ export default function DownloadAllImagesButton({
           url: string;
         }[];
 
+        const chunkSize = 500; // Number of images per batch
+        const chunks = [];
+        for (let i = 0; i < presignedUrls.length; i += chunkSize) {
+          chunks.push(presignedUrls.slice(i, i + chunkSize));
+        }
+
         setFilesToDownload(presignedUrls.length);
 
-        const zip = new JSZip();
+        for (let i = 0; i < chunks.length; i++) {
+          const chunk = chunks[i];
+          const zip = new JSZip();
+          const downloadPromises = chunk.map(async (url) => {
+            const response = await fetch(url.url);
+            const blob = await response.blob();
+            const filename = url.key.split('/').pop()?.slice(6) || 'image';
+            zip.file(filename, blob);
+            setFilesToDownload((prev) => prev - 1);
+          });
 
-        // TODO: Add user name to image filename
-        // TODO: Possibly paginate the download to avoid memory issues
+          await Promise.all(downloadPromises);
 
-        const downloadPromises = presignedUrls.map(async (url) => {
-          const response = await fetch(url.url);
-          const blob = await response.blob();
-          const filename = url.key.split('/').pop()?.slice(6) || 'image';
-          zip.file(filename, blob);
-          setFilesToDownload((prev) => prev - 1);
-        });
+          setFinalizing(true);
 
-        await Promise.all(downloadPromises);
-        setFilesToDownload(0);
+          const content = await zip.generateAsync({ type: 'blob' });
+          saveAs(
+            content,
+            `${guest ? guest + '-' + event : event}-part-${i + 1}.zip`,
+          );
 
-        setFinalizing(true);
-
-        await zip.generateAsync({ type: 'blob' }).then((content) => {
-          saveAs(content, `${guest ? guest + '-' + event : event}.zip`);
-        });
+          setFinalizing(false);
+        }
 
         setCompleted(true);
       } else {
@@ -76,7 +84,7 @@ export default function DownloadAllImagesButton({
     return (
       <Button variant='outline' disabled className='select-none'>
         <Loader2 className='mr-2 size-5 animate-spin' />
-        Finalizing download
+        Zipping file
       </Button>
     );
   }
