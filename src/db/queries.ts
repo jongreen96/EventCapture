@@ -2,7 +2,7 @@ import { plansData } from '@/app/plans/_components/plans';
 import { and, eq, gt, isNull, lt, or } from 'drizzle-orm';
 import { nanoid } from 'nanoid';
 import { db } from './db';
-import { images, Plan, plans } from './schema';
+import { downloads, images, Plan, plans } from './schema';
 
 // PLANS QUERIES
 
@@ -273,4 +273,49 @@ export async function getExpiredPlans() {
   });
 
   return expiredPlans;
+}
+
+export async function createDownloadUrl(key: string, presignedUrl: string) {
+  const url = nanoid(10);
+
+  await db
+    .insert(downloads)
+    .values({
+      key,
+      presignedUrl,
+      url,
+      expires: new Date(Date.now() + 60 * 60 * 1000),
+    })
+    .onConflictDoUpdate({
+      target: downloads.key,
+      set: {
+        url,
+        presignedUrl,
+        expires: new Date(Date.now() + 60 * 60 * 1000),
+      },
+    });
+
+  return url;
+}
+
+export async function getDownloadUrl(key: string) {
+  const download = await db.query.downloads.findFirst({
+    columns: {
+      url: true,
+    },
+    where: and(eq(downloads.key, key), gt(downloads.expires, new Date())),
+  });
+
+  return download?.url;
+}
+
+export async function getDownload(url: string) {
+  const download = await db.query.downloads.findFirst({
+    columns: {
+      presignedUrl: true,
+    },
+    where: and(eq(downloads.url, url), gt(downloads.expires, new Date())),
+  });
+
+  return download?.presignedUrl;
 }

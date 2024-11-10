@@ -54,6 +54,16 @@ export const images = pgTable('image', {
   createdAt: timestamp('createdAt', { mode: 'date' }).notNull(),
 });
 
+export const downloads = pgTable('download', {
+  id: text('id')
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  key: text('key').notNull().unique(),
+  presignedUrl: text('presignedUrl').notNull(),
+  url: text('url').notNull(),
+  expires: timestamp('expires', { mode: 'date' }).notNull(),
+});
+
 export const accounts = pgTable(
   'account',
   {

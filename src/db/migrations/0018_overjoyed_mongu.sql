@@ -1,0 +1,1 @@
+ALTER TABLE "download" ADD CONSTRAINT "download_key_unique" UNIQUE("key");
