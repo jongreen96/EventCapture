@@ -18,8 +18,8 @@ export const plansData = {
     guests: Infinity,
     storageLimit: 5, // GB
     // ~ 1000 images @ 5MB each
-    // £0.33 total costs @ max usage inc stripe fees (1.5% + 20p)
-    // £9.67 profit
+    // £1 total costs @ max usage inc stripe fees (1.5% + 20p)
+    // £9 profit
   },
   medium: {
     name: 'medium',
@@ -28,8 +28,8 @@ export const plansData = {
     guests: Infinity,
     storageLimit: 50, // GB
     // ~ 10,000 images @ 5MB each
-    // £2.45 total costs @ max usage inc stripe fees (1.5% + 20p)
-    // £37.55 profit
+    // £7.35 total costs @ max usage inc stripe fees (1.5% + 20p)
+    // £32.65 profit
   },
   large: {
     name: 'large',
@@ -38,8 +38,8 @@ export const plansData = {
     guests: Infinity,
     storageLimit: 250, // GB
     // ~ 50,000 images @ 5MB each
-    // £18.20 total costs @ max usage inc stripe fees (1.5% + 20p)
-    // £81.80 profit
+    // £54.60 total costs @ max usage inc stripe fees (1.5% + 20p)
+    // £45.40 profit
   },
   enterprise: {
     name: 'enterprise',
@@ -48,8 +48,8 @@ export const plansData = {
     guests: Infinity,
     storageLimit: 2048, // GB
     // ~ 200,000 images @ 5MB each
-    // £142.87 total costs @ max usage inc stripe fees (1.5% + 20p)
-    // £357.13 profit
+    // £428.61 total costs @ max usage inc stripe fees (1.5% + 20p)
+    // £71.39 profit
   },
 };
 
