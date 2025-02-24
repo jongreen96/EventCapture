@@ -2,8 +2,18 @@ import Plans from '@/app/plans/_components/plans';
 import SignUpForm from '@/components/sign-up-form';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import getSession from '@/lib/getSession';
+import Image from 'next/image';
 import { redirect } from 'next/navigation';
 import { Suspense } from 'react';
+
+import pic1 from '../../public/pic-1.png';
+import pic2 from '../../public/pic-2.png';
+import pic3 from '../../public/pic-3.png';
+import pic4 from '../../public/pic-4.png';
+import pic5 from '../../public/pic-5.png';
+import pic6 from '../../public/pic-6.png';
+import pic7 from '../../public/pic-7.png';
+import pic8 from '../../public/pic-8.png';
 
 export default async function Home() {
   const session = await getSession();
@@ -98,21 +108,6 @@ export default async function Home() {
 
         <section className='container flex flex-col items-center p-4 text-center'>
           <h2 className='max-w-prose text-3xl font-semibold'>
-            Capture every moment effortlessly
-          </h2>
-
-          <p className='max-w-prose text-muted-foreground'>
-            Never miss a moment with Event Capture. Generate a unique QR code,
-            share it with your guests, and collect all their photos in one
-            place. Relive your event through the eyes of everyone who was there,
-            capturing every angle effortlessly.
-          </p>
-
-          <Card className='mt-4 aspect-video w-full bg-muted lg:w-3/4'></Card>
-        </section>
-
-        <section className='container flex flex-col items-center p-4 text-center'>
-          <h2 className='max-w-prose text-3xl font-semibold'>
             Seamless Event Management with the Dashboard Page
           </h2>
 
@@ -123,10 +118,45 @@ export default async function Home() {
             preserved.
           </p>
 
+          <Card className='mt-4 w-full overflow-hidden bg-muted lg:w-3/4'>
+            <Image src={pic1} alt='Event Capture Image' />
+          </Card>
+        </section>
+
+        <section className='container flex flex-col items-center p-4 text-center'>
+          <h2 className='max-w-prose text-3xl font-semibold'>
+            Capture every moment effortlessly
+          </h2>
+
+          <p className='max-w-prose text-muted-foreground'>
+            Never miss a moment with Event Capture. Generate a unique QR code,
+            share it with your guests, and collect all their photos in one
+            place. Relive your event through the eyes of everyone who was there,
+            capturing every angle effortlessly.
+          </p>
+
           <div className='mt-4 grid aspect-video w-full grid-cols-3 grid-rows-2 gap-2 lg:w-3/4'>
-            <Card className='col-end-2 row-start-1 row-end-3 h-full w-full bg-muted'></Card>
-            <Card className='col-start-2 col-end-4 row-start-1 row-end-2 h-full w-full bg-muted'></Card>
-            <Card className='col-start-2 col-end-4 row-start-2 row-end-3 h-full w-full bg-muted'></Card>
+            <Card className='col-end-2 row-start-1 row-end-3 h-full w-full overflow-hidden'>
+              <Image
+                src={pic2}
+                alt='Event Capture Image'
+                className='h-full object-cover'
+              />
+            </Card>
+            <Card className='col-start-2 col-end-4 row-start-1 row-end-2 aspect-video h-full w-full overflow-hidden bg-muted'>
+              <Image
+                src={pic3}
+                alt='Event Capture Image'
+                className='h-full object-cover'
+              />
+            </Card>
+            <Card className='col-start-2 col-end-4 row-start-2 row-end-3 aspect-video h-full w-full overflow-hidden bg-muted'>
+              <Image
+                src={pic4}
+                alt='Event Capture Image'
+                className='h-full object-cover'
+              />
+            </Card>
           </div>
         </section>
 
@@ -142,7 +172,13 @@ export default async function Home() {
             memories are complete and vibrant.
           </p>
 
-          <Card className='mt-4 aspect-video w-full bg-muted lg:w-3/4'></Card>
+          <Card className='mt-4 w-full overflow-hidden bg-muted lg:w-3/4'>
+            <Image
+              src={pic5}
+              alt='Event Capture Image'
+              className='w-full object-cover'
+            />
+          </Card>
         </section>
 
         <Plans reference />
@@ -160,10 +196,28 @@ export default async function Home() {
             of mind while reliving your special day.
           </p>
 
-          <div className='mt-4 grid aspect-video w-full grid-cols-3 grid-rows-2 gap-2 lg:w-3/4'>
-            <Card className='col-end-2 row-start-1 row-end-3 h-full w-full bg-muted'></Card>
-            <Card className='col-start-2 col-end-4 row-start-1 row-end-2 h-full w-full bg-muted'></Card>
-            <Card className='col-start-2 col-end-4 row-start-2 row-end-3 h-full w-full bg-muted'></Card>
+          <div className='mt-4 grid w-full grid-cols-3 gap-2 lg:w-3/4'>
+            <Card className='h-full w-full overflow-hidden'>
+              <Image
+                src={pic6}
+                alt='Event Capture Image'
+                className='h-full object-cover'
+              />
+            </Card>
+            <Card className='h-full w-full overflow-hidden'>
+              <Image
+                src={pic7}
+                alt='Event Capture Image'
+                className='h-full w-full object-cover'
+              />
+            </Card>
+            <Card className='h-full w-full overflow-hidden'>
+              <Image
+                src={pic8}
+                alt='Event Capture Image'
+                className='h-full object-cover'
+              />
+            </Card>
           </div>
         </section>
       </main>
