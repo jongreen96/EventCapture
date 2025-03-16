@@ -9,7 +9,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [
     Google,
     Resend({
-      from: 'Event Capture <no-reply@event-capture.jongreen.dev>',
+      from: 'Event Capture <support@jongreen.dev>',
     }),
   ],
+  pages: {
+    verifyRequest: '/verify',
+  },
 });
