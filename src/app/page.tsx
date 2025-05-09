@@ -24,10 +24,10 @@ export default async function Home() {
       <main className='space-y-8'>
         <section
           id='hero'
-          className='flex items-center bg-hero bg-cover bg-center lg:h-[50vh]'
+          className='flex items-center bg-cover bg-center lg:h-[50vh]'
         >
           <div className='container flex flex-col items-center justify-around space-y-6 p-4 lg:min-h-96 lg:flex-row'>
-            <div className='max-w-prose space-y-6 text-lg font-semibold text-white'>
+            <div className='max-w-prose space-y-6 text-lg font-semibold text-primary'>
               <h1 className='text-4xl font-semibold'>
                 <span className='text-5xl font-bold'>Event Capture</span>
                 <br />

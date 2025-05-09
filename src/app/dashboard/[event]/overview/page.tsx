@@ -131,7 +131,7 @@ export default async function OverviewPage({
       </section>
 
       <section className='grid gap-4 md:grid-cols-3'>
-        <Card className='md:col-span-2'>
+        <Card className='border-none md:col-span-2'>
           <CardHeader>
             <CardTitle className='flex items-center justify-between gap-2'>
               Photos
@@ -169,7 +169,7 @@ export default async function OverviewPage({
           </CardContent>
         </Card>
 
-        <Card className='select-none'>
+        <Card className='select-none border-none'>
           <CardHeader>
             <CardTitle className='flex items-center justify-between gap-2'>
               Guests
